@@ -1,5 +1,7 @@
 import java.util.Scanner; //For user input
+import java.util.ArrayList;
 public class Gabriel {
+    static ArrayList<String> myItems = new ArrayList<>();
     public static void main(String[] args) {
         String Indentations = "--------------------";
         String Greetings = Indentations + "\n"
@@ -16,10 +18,24 @@ public class Gabriel {
             if (input.equals("bye")) {
                 break;
             }
-            System.out.println(Indentations + "\n" + input + "\n" + Indentations);
+            if (input.equals("list")){
+                System.out.println(Indentations);
+                listItems(myItems);
+                System.out.println(Indentations);
+                continue;
+            }
+            myItems.add(input);
+            System.out.println(Indentations + "\n" + "added: " + input + "\n" + Indentations);
         }
         String exitMessage = Indentations + "\n" + "Bye. Hope to see you again soon!\n"
                 + Indentations;
         System.out.println(exitMessage);
+    }
+    public static void listItems(ArrayList<String>myItems){
+        int count = 1;
+        for (String item: myItems){
+            System.out.println(count + ". " + item);
+            count++;
+        }
     }
 }
