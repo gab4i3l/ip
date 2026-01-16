@@ -17,6 +17,7 @@ public class Gabriel {
             input = myScanner.nextLine();
             String[] parts = input.split(" ");
             String command = parts[0];
+            String description;
 
             switch(command){
                 case "bye":
@@ -41,6 +42,35 @@ public class Gabriel {
                     myTask.get(unmarkIndex).setDone(false);
                     System.out.println(Indentations);
                     break;
+                case "todo":
+                    System.out.println(Indentations);
+                    description = input.substring(5);
+                    myTask.add(new ToDos(description));
+                    countTaskItems();
+                    System.out.println(Indentations);
+                    break;
+                case "deadline":
+                    System.out.println(Indentations);
+                    String deadlineInput = input.substring(9);
+                    String[] deadlineParts = deadlineInput.split(" /by ");
+                    description = deadlineParts[0];
+                    String by = deadlineParts[1];
+                    myTask.add(new Deadlines(description,by));
+                    countTaskItems();
+                    System.out.println(Indentations);
+                    break;
+                case "event":
+                    System.out.println(Indentations);
+                    String eventInput = input.substring(6);
+                    String[] eventParts = eventInput.split(" /from ");
+                    String eventDescription = eventParts[0];
+                    String[] timeParts = eventParts[1].split(" /to ");
+                    String from = timeParts[0];
+                    String to = timeParts[1];
+                    myTask.add(new Events(eventDescription,from,to));
+                    countTaskItems();
+                    System.out.println(Indentations);
+                    break;
                 default:
                     myTask.add(new Task(input));
                     System.out.println(Indentations + "\n" + "added: " + input + "\n" + Indentations);
@@ -52,8 +82,12 @@ public class Gabriel {
         System.out.println("Here are the tasks in your list:");
         int count = 1;
         for (Task task: myTask){
-            System.out.println(count + ".[" + task.getStatusIcon()+ "] " + task.getDescription());
+            System.out.println(count + "." + task.toString());
             count++;
         }
+    }
+
+    public static void countTaskItems(){
+        System.out.println("Now you have " + myTask.size() + " tasks in your list.");
     }
 }
