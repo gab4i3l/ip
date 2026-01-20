@@ -204,11 +204,11 @@ public class Gabriel {
                         myTask.add(toDo);
                         break;
                     case "Deadlines":
-                        Task deadline = new Deadlines(description,isDone,parts[3]);
+                        Task deadline = new Deadlines(description,isDone,parts[3].trim());
                         myTask.add(deadline);
                         break;
                     case "Event":
-                        Task event = new Events(description,isDone,parts[3], parts[4]);
+                        Task event = new Events(description,isDone,parts[3].trim(), parts[4].trim());
                         myTask.add(event);
                         break;
                 }
