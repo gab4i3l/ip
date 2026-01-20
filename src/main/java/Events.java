@@ -6,12 +6,21 @@ public class Events extends Task{
         super(description);
         this.to = to;
         this.from = from;
-        System.out.println("Got it. I've added this task: \n" + "   " +
-                this.toString());
+    }
+
+    public Events(String description, boolean isDone, String from, String to) {
+        super(description,isDone);
+        this.to = to;
+        this.from = from;
     }
 
     @Override
     public String toString(){
-        return "[E]" + super.toString() + " (from: " + this.from + " to: " + this.to + ")";
+        return "[E]" + super.toString() + " (" + this.from + this.to + ")";
+    }
+
+    @Override
+    public String writeToFile() {
+        return String.format("Event | %d | %s | from: %s | to: %s", this.checkDone(), this.description,this.from,this.to);
     }
 }

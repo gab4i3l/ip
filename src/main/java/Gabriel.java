@@ -1,22 +1,29 @@
+import java.util.Locale;
 import java.util.Scanner; //For user input
 import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.IOException;
+
 public class Gabriel {
     static ArrayList<Task> myTask = new ArrayList<>();
+    static String Indentations = "\u2500".repeat(50);
+    static String filePath = "./data/Gabriel.txt";
     public static void main(String[] args) {
-        String Indentations = "\u2500".repeat(50);
         String Greetings = Indentations + "\n"
-                + "Hello! I'm Gabriel \n"
+                + "Hello! I'm Gabriel! \n"
                 + "What can I do for you? \n"
                 + Indentations + "\n";
 
+        loadFile();
         System.out.println(Greetings);
-        System.out.println("Enter something and I will echo it back to you: \n");
+        System.out.println("Enter a command: \n");
         Scanner myScanner = new Scanner(System.in);
         String input = "";
         while (myScanner.hasNextLine()) {
             input = myScanner.nextLine();
             String[] parts = input.split(" ");
-            String command = parts[0];
+            String command = parts[0].toLowerCase();
             String description;
 
             switch(command){
@@ -72,7 +79,9 @@ public class Gabriel {
                         if (description.isEmpty()){
                             throw new StringIndexOutOfBoundsException();
                         }
-                        myTask.add(new ToDos(description));
+                        ToDos newToDo = new ToDos(description);
+                        myTask.add(newToDo);
+                        System.out.println("Got it. I've added this task: \n" + "   " + newToDo.toString());
                         countTaskItems();
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("The description given is empty!");
@@ -92,7 +101,9 @@ public class Gabriel {
                         }
                         description = deadlineParts[0].trim();
                         String by = deadlineParts[1].trim();
-                        myTask.add(new Deadlines(description, by));
+                        Deadlines newDeadLine = new Deadlines(description,by);
+                        myTask.add(newDeadLine);
+                        System.out.println("Got it. I've added this task: \n" + "   " + newDeadLine.toString());
                         countTaskItems();
                     } catch (StringIndexOutOfBoundsException e){
                         System.out.println("The description given is empty!");
@@ -119,7 +130,9 @@ public class Gabriel {
                         if (from.isEmpty() || to.isEmpty()) {
                             System.out.println("Please provide a valid from and to");
                         }
-                        myTask.add(new Events(eventDescription, from, to));
+                        Events newEvent = new Events(eventDescription,from,to);
+                        myTask.add(newEvent);
+                        System.out.println("Got it. I've added this task: \n" + "   " + newEvent.toString());
                         countTaskItems();
                     } finally {
                         System.out.println(Indentations);
@@ -144,6 +157,12 @@ public class Gabriel {
                         System.out.println(Indentations);
                     }
                     break;
+                case "save":
+                    saveTasks(myTask);
+                    System.out.println(Indentations);
+                    System.out.println("Alright we have saved your tasks!");
+                    System.out.println(Indentations);
+                    break;
 
                 default:
                     System.out.println(Indentations + "\n" + "That is not a proper command!\n" + Indentations);
@@ -163,4 +182,64 @@ public class Gabriel {
     public static void countTaskItems(){
         System.out.println("Now you have " + myTask.size() + " tasks in your list.");
     }
+
+    public static void loadFile() {
+        File file = new File(filePath);
+        try {
+            if (!file.exists()) {
+                System.out.println("No previous data found. We are having a fresh start!");
+                return;
+            }
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(" \\|");
+                String taskType = parts[0].trim();
+                boolean isDone = parts[1].trim().equals("1");
+                String description = parts[2].trim();
+
+                switch(taskType){
+                    case "Todos":
+                        Task toDo = new ToDos(description,isDone);
+                        myTask.add(toDo);
+                        break;
+                    case "Deadlines":
+                        Task deadline = new Deadlines(description,isDone,parts[3]);
+                        myTask.add(deadline);
+                        break;
+                    case "Event":
+                        Task event = new Events(description,isDone,parts[3], parts[4]);
+                        myTask.add(event);
+                        break;
+                }
+            }
+            scanner.close();
+        } catch (IOException e) {
+            System.out.println("Error! We cannot open the file!");
+        }
+        System.out.println(Indentations);
+        System.out.println("Loaded previous tasks successfully! Use the command 'list' to see them!");
+
+    }
+
+    public static void saveTasks(ArrayList<Task> myTask) {
+        File file =  new File(filePath);
+        File parentDirectory = file.getParentFile();
+        if (!parentDirectory.exists()) {
+            boolean parentDirectoryCreated = parentDirectory.mkdir();
+            if (parentDirectoryCreated) {
+                System.out.println("Directory created!" +  parentDirectory.getPath());
+            }
+        }
+        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+            for (Task task: myTask) {
+                writer.println(task.writeToFile());
+                System.out.println("Saved: " + task.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Ran into an error saving tasks");
+            System.out.println(Indentations);
+        }
+    }
+
 }

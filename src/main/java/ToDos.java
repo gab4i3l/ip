@@ -2,11 +2,19 @@ public class ToDos extends Task{
 
     public ToDos(String description){
         super(description);
-        System.out.println("Got it. I've added this task: \n" + "   " +
-                this.toString());
     }
+
+    public ToDos(String description, boolean isDone){
+        super(description,isDone);
+    }
+
     @Override
     public String toString(){
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String writeToFile() {
+        return String.format("Todos | %d | %s", this.checkDone(), this.description);
     }
 }

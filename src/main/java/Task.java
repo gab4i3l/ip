@@ -7,6 +7,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public Task(String description,boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "X": " ");
     }
@@ -24,11 +29,22 @@ public class Task {
                     "[X] " + getDescription());
         }
     }
+
     public String getDescription() {
         return description;
     }
+    public int checkDone() {
+        if (this.isDone) {
+            return 1;
+        }
+        return 0;
+    }
     public String toString() {
         return "[" + getStatusIcon()+ "] " + getDescription();
+    }
+
+    public String writeToFile() {
+        return String.format("Task | %d | %s", this.checkDone(), this.description);
     }
 
 }
