@@ -12,12 +12,15 @@ public class Tasklist {
         this.tasks.add(task);
     }
     public Task deleteTask(int index) {
-        return tasks.remove(index);
+        return this.tasks.remove(index);
     }
-    public Task getTask(int index) {
-        return tasks.get(index);
+    public ArrayList<Task> getTasks() {
+        return this.tasks;
+    }
+    public Task getSpecificTask(int index) {
+        return this.tasks.get(index);
     }
     public int getSize() {
-        return tasks.size();
+        return this.tasks.size();
     }
 }

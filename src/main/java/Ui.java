@@ -13,14 +13,14 @@ public class Ui {
         System.out.println(Indentations);
     }
 
-    public void welcomeMessage() {
+    public void printWelcomeMessage() {
         printIndentations();
         System.out.println("\n Hello! I am Gabriel!" +
                 "What can I do for you? \n");
         printIndentations();
     }
 
-    public void exitMessage() {
+    public void printExitMessage() {
         System.out.println(Indentations + "\n" + "Bye. Hope to see you again soon!\n"
                 + Indentations);
     }
@@ -29,11 +29,11 @@ public class Ui {
         return scanner.nextLine();
     }
 
-    public void showMessage(String message) {
+    public void printMessage(String message) {
         System.out.println(message);
     }
 
-    public static void listTaskItems(ArrayList<Task> myTask) {
+    public void listTaskItems(ArrayList<Task> myTask) {
         System.out.println("Here are the tasks in your list:");
         int count = 1;
         for (Task task : myTask) {
@@ -41,8 +41,8 @@ public class Ui {
             count++;
         }
     }
-    public static void countTaskItems(){
-        System.out.println("Now you have " + Tasklist.getSize() + " tasks in your list.");
+    public  void printTaskListCount(Tasklist myTaskList) {
+        System.out.println("Now you have " + myTaskList.getSize() + " tasks in your list.");
     }
 }
 

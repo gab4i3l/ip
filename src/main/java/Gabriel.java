@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public class Gabriel {
     private Storage storage;
-    private Tasklist tasks;
+    private Tasklist taskList;
     private Ui ui;
 
     public Gabriel(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
-        tasks = new Tasklist(storage.loadFile());
+        taskList = new Tasklist(storage.loadFile());
     }
 
     public void run() {
-        ui.welcomeMessage();
+        ui.printWelcomeMessage();
         Scanner myScanner = new Scanner(System.in);
         String input = "";
         while (myScanner.hasNextLine()) {
@@ -26,20 +26,20 @@ public class Gabriel {
             String description;
             switch(command){
                 case "bye":
-                    ui.exitMessage();
+                    ui.printExitMessage();
                     break;
                 case "list":
                     ui.printIndentations();
-                    ui.listTaskItems(myTask);
+                    ui.listTaskItems(taskList.getTasks());
                     ui.printIndentations();
-                    ui.countTaskItems();
+                    ui.printTaskListCount(taskList);
                     break;
                 case "mark":
                     try {
                         ui.printIndentations();
                         int markIndex = Integer.parseInt(parts[1]) - 1;
                         myTask.get(markIndex).setDone(true);
-                        ui.countTaskItems();
+                        ui.printTaskListCount(taskList);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("The number given is too big! You don't have that many tasks!");
                     } catch (NumberFormatException e) {
@@ -56,7 +56,7 @@ public class Gabriel {
                         ui.printIndentations();
                         int unmarkIndex = Integer.parseInt(parts[1]) - 1;
                         myTask.get(unmarkIndex).setDone(false);
-                        ui.countTaskItems();
+                        ui.printTaskListCount(taskList);
                     }catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("The number given is too big! You don't have that many tasks!");
                     } catch (NumberFormatException e) {
@@ -78,7 +78,7 @@ public class Gabriel {
                         ToDos newToDo = new ToDos(description);
                         myTask.add(newToDo);
                         System.out.println("Got it. I've added this task: \n" + "   " + newToDo.toString());
-                        ui.countTaskItems();
+                        ui.printTaskListCount(taskList);
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("The description given is empty!");
                     }
@@ -100,7 +100,7 @@ public class Gabriel {
                         Deadlines newDeadLine = new Deadlines(description,by);
                         myTask.add(newDeadLine);
                         System.out.println("Got it. I've added this task: \n" + "   " + newDeadLine.toString());
-                        ui.countTaskItems();
+                        ui.printTaskListCount(taskList);
                     } catch (StringIndexOutOfBoundsException e){
                         System.out.println("The description given is empty!");
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -129,7 +129,7 @@ public class Gabriel {
                         Events newEvent = new Events(eventDescription,from,to);
                         myTask.add(newEvent);
                         System.out.println("Got it. I've added this task: \n" + "   " + newEvent.toString());
-                        ui.countTaskItems();
+                        ui.printTaskListCount(taskList);
                     } finally {
                         ui.printIndentations();
                     }
@@ -150,7 +150,7 @@ public class Gabriel {
                         System.out.println("I don't think that task exist...");
                     }
                     finally {
-                        ui.printIndentations());
+                        ui.printIndentations();
                     }
                     break;
                 case "save":
@@ -161,7 +161,9 @@ public class Gabriel {
                     break;
 
                 default:
-                    System.out.println(ui.printIndentations() + "\n" + "That is not a proper command!\n" + ui.printIndentations());
+                    ui.printIndentations();
+                    System.out.println("\n" + "That is not a proper command!\n");
+                    ui.printIndentations();
                     break;
             }
         }
@@ -169,15 +171,8 @@ public class Gabriel {
 
     }
 
-    public static void main (Strings[] args) {
+    public void main(String[] args) {
         new Gabriel("./data/tasks.txt").run();
     }
-    static ArrayList<Task> myTask = new ArrayList<>();
-    static String filePath = "./data/Gabriel.txt";
-    public static void main(String[] args) {
 
 
-
-
-
-}
