@@ -7,7 +7,6 @@ import java.io.IOException;
 
 public class Gabriel {
     static ArrayList<Task> myTask = new ArrayList<>();
-    static String Indentations = "\u2500".repeat(50);
     static String filePath = "./data/Gabriel.txt";
     public static void main(String[] args) {
         String Greetings = Indentations + "\n"
@@ -170,14 +169,7 @@ public class Gabriel {
             }
         }
     }
-    public static void listTaskItems(ArrayList<Task>myTask){
-        System.out.println("Here are the tasks in your list:");
-        int count = 1;
-        for (Task task: myTask){
-            System.out.println(count + "." + task.toString());
-            count++;
-        }
-    }
+
 
     public static void countTaskItems(){
         System.out.println("Now you have " + myTask.size() + " tasks in your list.");
