@@ -9,11 +9,20 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
-    public void welcomeMessage() {
+    public void printIndentations() {
         System.out.println(Indentations);
+    }
+
+    public void welcomeMessage() {
+        printIndentations();
         System.out.println("\n Hello! I am Gabriel!" +
                 "What can I do for you? \n");
-        System.out.println(Indentations);
+        printIndentations();
+    }
+
+    public void exitMessage() {
+        System.out.println(Indentations + "\n" + "Bye. Hope to see you again soon!\n"
+                + Indentations);
     }
 
     public String readCommand() {
@@ -32,7 +41,10 @@ public class Ui {
             count++;
         }
     }
+    public static void countTaskItems(){
+        System.out.println("Now you have " + Tasklist.getSize() + " tasks in your list.");
+    }
 }
 
 
-}
+
