@@ -12,13 +12,26 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving of data for Gabriel chatbot.
+ * @author Gabriel Phua
+ * @since 2026-01-22
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Construct a Storage object with a specified file path.
+     * @param filePath The filepath to the stored data
+     */
     public Storage (String filePath){
         this.filePath = filePath;
     }
 
+    /**
+     * Loads the task list from a saved file
+     * @return The previously saved list of task
+     */
     public ArrayList<Task> loadFile() {
         File file = new File(this.filePath);
         ArrayList<Task> loadedTasks = new ArrayList<>();
@@ -59,6 +72,10 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves the given list of task to a local storage file.
+     * @param myTask The list of task to be saved
+     */
     public void saveTasks(ArrayList<Task> myTask) {
         File file =  new File(this.filePath);
         File parentDirectory = file.getParentFile();

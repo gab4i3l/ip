@@ -7,18 +7,29 @@ import gabriel.task.*;
 import gabriel.ui.Ui;
 import java.util.Scanner;
 
+/**
+ * Main entry point for Gabriel chatbot
+ * @author Gabriel Phua
+ * @since 2026-01-22
+ */
 public class Gabriel {
     private Storage storage;
     private Tasklist taskList;
     private Ui ui;
 
+    /**
+     * Initialise a new Gabriel chatbot instance
+     * @param filePath The filepath to the previously stored data
+     */
     public Gabriel(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         taskList = new Tasklist(storage.loadFile());
     }
-
-    public void run() {
+    /**
+     * Starts the main program
+     */
+    public void run(){
         ui.printWelcomeMessage();
         Scanner myScanner = new Scanner(System.in);
         String input = "";
@@ -130,6 +141,10 @@ public class Gabriel {
             }
         }
     }
+    /**
+     * Launches the Gabriel chatbot application
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         new Gabriel("./data/Gabriel.txt").run();
     }

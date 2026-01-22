@@ -4,12 +4,29 @@ import gabriel.exception.GabrielException;
 
 import java.time.format.DateTimeParseException;
 
+/**
+ * Translate user input into commands and data the chatbot can work with.
+ * @author Gabriel Phua
+ * @since 2026-01-22
+ */
 public class Parser {
+
+    /**
+     * Extracts the command from the user input.
+     * @param input The raw user input
+     * @return The command given by user
+     */
     public static String getCommand(String input) {
         String[] parts = input.split(" ");
         return parts[0].toLowerCase();
     }
 
+    /**
+     * Extracts the index pointing to a task from the user input.
+     * @param input The raw user input
+     * @return The index in integer, pointing to a task
+     * @throws GabrielException if the input is not a number or in a wrong format
+     */
     public static int parseIndex(String input) throws GabrielException {
         try {
             String[] parts = input.split(" ");
@@ -25,6 +42,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts the description for a ToDo task from user input
+     * @param input The raw user input
+     * @return The description of the task
+     * @throws GabrielException if the description is empty or the input is in a wrong format
+     */
     public static String parseToDo(String input) throws GabrielException {
         try {
             String description = input.substring(5).trim();
@@ -39,6 +62,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts the description and due date of a Deadline task.
+     * @param input The raw input from user due date of the Deadline task
+     * @return A String array containing the description and due date of the Deadline task
+     * @throws GabrielException if description and/or deadline is missing or input is in a wrong format
+     */
     public static String[] parseDeadline(String input) throws GabrielException {
         try {
             String content = input.substring(9).trim();
@@ -63,6 +92,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts the description, start and end time of an Event task
+     * @param input The raw user input
+     * @return String array containing the description, start and end time of the Event task
+     * @throws GabrielException if description and/or start time and/or end time is missing or input is in the wrong format
+     */
     public static String[] parseEvent(String input) throws GabrielException {
         try {
             String eventInput = input.substring(6).trim();
