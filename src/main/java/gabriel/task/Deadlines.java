@@ -22,6 +22,6 @@ public class Deadlines extends Task {
 
     @Override
     public String writeToFile() {
-        return String.format("Gabriel.Deadlines | %d | %s | by: %s", this.checkDone(), this.description, by.format(Task.FILE_FORMAT));
+        return String.format("Deadlines | %d | %s | by: %s", this.checkDone(), this.description, by.format(Task.FILE_FORMAT));
     }
 }

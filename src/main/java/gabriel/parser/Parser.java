@@ -51,6 +51,8 @@ public class Parser {
             }
             String description = parts[0].trim();
             String by = parts[1].trim();
+            System.out.println(description);
+            System.out.println(by);
             return new String[]{description, by};
         } catch (StringIndexOutOfBoundsException e) {
             throw new GabrielException("The deadline command must follow the format: deadline <description> /by <time>");
