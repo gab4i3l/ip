@@ -1,3 +1,11 @@
+package gabriel.storage;
+
+import gabriel.ui.Ui;
+import gabriel.task.Deadlines;
+import gabriel.task.Events;
+import gabriel.task.Task;
+import gabriel.task.ToDos;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,7 +39,7 @@ public class Storage {
                         Task toDo = new ToDos(description, isDone);
                         loadedTasks.add(toDo);
                         break;
-                    case "Deadlines":
+                    case "Gabriel.Deadlines":
                         Task deadline = new Deadlines(description, isDone, parts[3].trim().replace("by: ",", "));
                         loadedTasks.add(deadline);
                         break;

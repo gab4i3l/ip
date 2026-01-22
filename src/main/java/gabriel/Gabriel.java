@@ -1,4 +1,11 @@
-import java.util.Scanner; //For user input
+package gabriel;
+
+import gabriel.exception.GabrielException;
+import gabriel.parser.Parser;
+import gabriel.storage.Storage;
+import gabriel.task.*;
+import gabriel.ui.Ui;
+import java.util.Scanner;
 
 public class Gabriel {
     private Storage storage;
@@ -91,7 +98,7 @@ public class Gabriel {
                         ui.printTaskAddedMessage(newEvent);
                         ui.printTaskListCount(taskList);
                     } catch (GabrielException e){
-                        System.out.println(e.getMessage());
+                        ui.printErrorMessage(e.getMessage());
                     } finally{
                         ui.printIndentations();
                     }
@@ -123,10 +130,11 @@ public class Gabriel {
             }
         }
     }
+    public static void main(String[] args) {
+        new Gabriel("./data/Gabriel.txt").run();
+    }
 }
-public void main(String[] args) {
-    new Gabriel("./data/Gabriel.txt").run();
-}
+
 
 
 

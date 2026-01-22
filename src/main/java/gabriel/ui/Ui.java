@@ -1,8 +1,13 @@
+package gabriel.ui;
+
+import gabriel.task.Task;
+import gabriel.task.Tasklist;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    static String Indentations = "\u2500".repeat(50);
+    public static String Indentations = "\u2500".repeat(50);
     public Scanner scanner;
 
     public Ui() {

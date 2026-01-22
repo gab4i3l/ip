@@ -1,4 +1,6 @@
-public class ToDos extends Task{
+package gabriel.task;
+
+public class ToDos extends Task {
 
     public ToDos(String description){
         super(description);

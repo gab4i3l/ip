@@ -1,3 +1,7 @@
+package gabriel.parser;
+
+import gabriel.exception.GabrielException;
+
 import java.time.format.DateTimeParseException;
 
 public class Parser {

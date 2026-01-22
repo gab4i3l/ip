@@ -1,3 +1,5 @@
+package gabriel.task;
+
 import java.time.format.DateTimeFormatter;
 
 public class Task {
@@ -49,7 +51,7 @@ public class Task {
     }
 
     public String writeToFile() {
-        return String.format("Task | %d | %s", this.checkDone(), this.description);
+        return String.format("Gabriel.Task | %d | %s", this.checkDone(), this.description);
     }
 
 }
