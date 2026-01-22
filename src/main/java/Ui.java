@@ -15,7 +15,7 @@ public class Ui {
 
     public void printWelcomeMessage() {
         printIndentations();
-        System.out.println("\n Hello! I am Gabriel!" +
+        System.out.println("\n Hello! I am Gabriel! " +
                 "What can I do for you? \n");
         printIndentations();
     }

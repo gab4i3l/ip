@@ -51,8 +51,6 @@ public class Storage {
         return loadedTasks;
     }
 
-
-
     public void saveTasks(ArrayList<Task> myTask) {
         File file =  new File(this.filePath);
         File parentDirectory = file.getParentFile();
