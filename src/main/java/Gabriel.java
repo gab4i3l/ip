@@ -18,7 +18,6 @@ public class Gabriel {
         while (myScanner.hasNextLine()) {
             input = myScanner.nextLine();
             String command = Parser.getCommand(input);
-            String description;
             switch(command){
                 case "bye":
                     ui.printExitMessage();
@@ -35,14 +34,9 @@ public class Gabriel {
                         int markIndex = Parser.parseIndex(input);
                         taskList.getTasks().get(markIndex).setDone(true);
                         ui.printTaskListCount(taskList);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The number given is too big! You don't have that many tasks!");
-                    } catch (NumberFormatException e) {
-                        System.out.println("That is not a number! Give me an actual number!");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("I don't think that task exist...");
-                    }
-                    finally {
+                    } catch (GabrielException e) {
+                        ui.printErrorMessage(e.getMessage());
+                    } finally {
                         ui.printIndentations();
                     }
                     break;
@@ -52,30 +46,22 @@ public class Gabriel {
                         int unmarkIndex = Parser.parseIndex(input);
                         taskList.getTasks().get(unmarkIndex).setDone(false);
                         ui.printTaskListCount(taskList);
-                    }catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The number given is too big! You don't have that many tasks!");
-                    } catch (NumberFormatException e) {
-                        System.out.println("That is not a number! Give me an actual number!");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("I don't think that task exist...");
-                    }
-                    finally {
+                    } catch (GabrielException e) {
+                        ui.printErrorMessage(e.getMessage());
+                    } finally {
                         ui.printIndentations();
                     }
                     break;
                 case "todo":
                     try {
                         ui.printIndentations();
-                        description = input.substring(5).trim();
-                        if (description.isEmpty()){
-                            throw new StringIndexOutOfBoundsException();
-                        }
-                        ToDos newToDo = new ToDos(description);
-                        taskList.getTasks().add(newToDo);
-                        System.out.println("Got it. I've added this task: \n" + "   " + newToDo.toString());
+                        String toDoDetails = Parser.parseToDo(input);
+                        ToDos newToDo = new ToDos(toDoDetails);
+                        taskList.addTask(newToDo);
+                        ui.printTaskAddedMessage(newToDo);
                         ui.printTaskListCount(taskList);
-                    } catch (StringIndexOutOfBoundsException e) {
-                        System.out.println("The description given is empty!");
+                    } catch (GabrielException e) {
+                        ui.printErrorMessage(e.getMessage());
                     }
                     finally {
                         ui.printIndentations();
@@ -84,21 +70,13 @@ public class Gabriel {
                 case "deadline":
                     try {
                         ui.printIndentations();
-                        String[] deadlineParts = Parser.parseDeadline(input);
-                        if (deadlineParts[0].trim().isEmpty()){
-                            System.out.println("The description given is empty!");
-                            break;
-                        }
-                        description = deadlineParts[0].trim();
-                        String by = deadlineParts[1].trim();
-                        Deadlines newDeadLine = new Deadlines(description,by);
-                        taskList.getTasks().add(newDeadLine);
-                        System.out.println("Got it. I've added this task: \n" + "   " + newDeadLine.toString());
+                        String[] deadlineDetails = Parser.parseDeadline(input);
+                        Deadlines newDeadLine = new Deadlines(deadlineDetails[0],deadlineDetails[1]);
+                        taskList.addTask(newDeadLine);
+                        ui.printTaskAddedMessage(newDeadLine);
                         ui.printTaskListCount(taskList);
-                    } catch (StringIndexOutOfBoundsException e){
-                        System.out.println("The description given is empty!");
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The deadline given is empty!");
+                    } catch (GabrielException e) {
+                        ui.printErrorMessage(e.getMessage());
                     }
                     finally{
                         ui.printIndentations();
@@ -109,10 +87,10 @@ public class Gabriel {
                         ui.printIndentations();
                         String[] eventDetails = Parser.parseEvent(input);
                         Events newEvent = new Events(eventDetails[0],eventDetails[1],eventDetails[2]);
-                        taskList.getTasks().add(newEvent);
-                        System.out.println("Got it. I've added this task: \n" + "   " + newEvent.toString());
+                        taskList.addTask(newEvent);
+                        ui.printTaskAddedMessage(newEvent);
                         ui.printTaskListCount(taskList);
-                    } catch (Exception e){
+                    } catch (GabrielException e){
                         System.out.println(e.getMessage());
                     } finally{
                         ui.printIndentations();
@@ -122,40 +100,34 @@ public class Gabriel {
                     try {
                         ui.printIndentations();
                         int deleteIndex = Parser.parseIndex(input);
-                        Task removedTask = taskList.getTasks().remove(deleteIndex);
-                        System.out.println("Noted. I've removed this task:\n " +
-                                removedTask.toString());
+                        Task removedTask = taskList.deleteTask(deleteIndex);
+                        ui.printTaskDeletedMessage(removedTask);
                         ui.printIndentations();
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The number given is too big! You don't have that many tasks!");
-                    } catch (NumberFormatException e) {
-                        System.out.println("That is not a number! Give me an actual number!");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("I don't think that task exist...");
-                    }
-                    finally {
+                    } catch (GabrielException e) {
+                        ui.printErrorMessage(e.getMessage());
+                    } finally {
                         ui.printIndentations();
                     }
                     break;
                 case "save":
                     storage.saveTasks(taskList.getTasks());
                     ui.printIndentations();
-                    System.out.println("Alright we have saved your tasks!");
+                    ui.printTaskSavedMessage();
                     ui.printIndentations();
                     break;
                 default:
                     ui.printIndentations();
-                    System.out.println("\n" + "That is not a proper command!\n");
+                    ui.printWrongCommandMessage();
                     ui.printIndentations();
                     break;
             }
         }
     }
+}
+public void main(String[] args) {
+    new Gabriel("./data/Gabriel.txt").run();
+}
 
-    }
 
-    public void main(String[] args) {
-        new Gabriel("./data/tasks.txt").run();
-    }
 
 

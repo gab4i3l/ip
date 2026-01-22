@@ -15,8 +15,8 @@ public class Ui {
 
     public void printWelcomeMessage() {
         printIndentations();
-        System.out.println("\n Hello! I am Gabriel! " +
-                "What can I do for you? \n");
+        System.out.println("\n" + "Hello! I am Gabriel! " +
+                "What can I do for you?\n");
         printIndentations();
     }
 
@@ -25,11 +25,23 @@ public class Ui {
                 + Indentations);
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
+    public void printTaskAddedMessage(Task task){
+        System.out.println("Got it. I've added this task: \n" + "   " + task.toString());
     }
 
-    public void printMessage(String message) {
+    public void printTaskDeletedMessage(Task task){
+        System.out.println("Noted. I've removed this task:\n " + task.toString());
+    }
+
+    public void printTaskSavedMessage(){
+        System.out.println("Alright we have saved your tasks!");
+    }
+
+    public void printWrongCommandMessage(){
+        System.out.println("\nThat is not a proper command!\n");
+    }
+
+    public void printErrorMessage(String message){
         System.out.println(message);
     }
 

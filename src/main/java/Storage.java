@@ -32,11 +32,11 @@ public class Storage {
                         loadedTasks.add(toDo);
                         break;
                     case "Deadlines":
-                        Task deadline = new Deadlines(description, isDone, parts[3].trim());
+                        Task deadline = new Deadlines(description, isDone, parts[3].trim().replace("by: ",", "));
                         loadedTasks.add(deadline);
                         break;
                     case "Event":
-                        Task event = new Events(description, isDone, parts[3].trim(), parts[4].trim());
+                        Task event = new Events(description, isDone, parts[3].trim().replace("from: ",", "), parts[4].trim().replace("by: ",", "));
                         loadedTasks.add(event);
                         break;
                 }
@@ -60,7 +60,7 @@ public class Storage {
                 System.out.println("Directory created!" +  parentDirectory.getPath());
             }
         }
-        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+        try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task: myTask) {
                 writer.println(task.writeToFile());
                 System.out.println("Saved: " + task.toString());
