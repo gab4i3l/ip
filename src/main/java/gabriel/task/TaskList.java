@@ -55,6 +55,32 @@ public class TaskList {
     }
 
     /**
+     * Finds tasks that matches the given keyword.
+     *
+     * @param keyword The keyword to search for.
+     */
+    public void findTasks(String keyword){
+        int count = 1;
+        boolean isFound = false;
+
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)){
+                if (!isFound) {
+                    System.out.println("Here are the matching tasks in your list:");
+                    isFound = true;
+                }
+                System.out.println(count + "." + task.toString());
+                count++;
+            }
+        }
+
+        if(!isFound) {
+            System.out.println("Sorry we did not find any matching tasks." +
+                    " Perhaps the task does not exist or you can try other keywords!");
+        }
+    }
+
+    /**
      * Returns the current number of task in the list.
      *
      * @return The size of the task list.

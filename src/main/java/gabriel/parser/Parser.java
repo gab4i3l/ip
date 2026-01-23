@@ -139,4 +139,24 @@ public class Parser {
                     " Please check if your input is in the correct format!");
         }
     }
+
+    /**
+     * Extracts the keyword for find command.
+     *
+     * @param input The raw user input.
+     * @return The keyword to search for.
+     * @throws GabrielException when keyword is not given or command is in the wrong format.
+     */
+    public static String parseFindKeyword(String input) throws GabrielException {
+        try {
+            String keyword = input.substring(5).trim();
+            if (keyword.isEmpty()) {
+                throw new GabrielException("The keyword cannot be empty!");
+            }
+            return keyword;
+        } catch (Exception e) {
+            throw new GabrielException("The command cannot be processed." +
+                    " Please check if your input is in the correct format!");
+        }
+    }
 }

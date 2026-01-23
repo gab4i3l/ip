@@ -77,6 +77,9 @@ public class Gabriel {
             case "save":
                 performSaveCommand(input);
                 break;
+            case "find":
+                performFindCommand(input);
+                break;
             default:
                 ui.printWrongCommandMessage();
                 break;
@@ -221,6 +224,22 @@ public class Gabriel {
         ui.printIndentations();
         ui.printTaskSavedMessage();
         ui.printIndentations();
+    }
+
+    /**
+     * Finds tasks that matches the user's input.
+     *
+     * @param input The raw user input.
+     */
+    public void performFindCommand(String input){
+        try {
+            ui.printIndentations();
+            String keyword = Parser.parseFindKeyword(input);
+            taskList.findTasks(keyword);
+            ui.printIndentations();
+        } catch (GabrielException e) {
+            ui.printErrorMessage(e.getMessage());
+        }
     }
 
     /**
