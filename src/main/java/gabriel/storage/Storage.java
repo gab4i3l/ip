@@ -1,6 +1,5 @@
 package gabriel.storage;
 
-import gabriel.ui.Ui;
 import gabriel.task.Deadlines;
 import gabriel.task.Events;
 import gabriel.task.Task;
@@ -18,19 +17,25 @@ import java.util.Scanner;
  * @since 2026-01-22
  */
 public class Storage {
+    /** Indentations for display purpose. */
+    private static final String INDENTATIONS = "\u2500".repeat(50);
+
+    /** The file path to load or save tasks. */
     private String filePath;
 
     /**
      * Construct a Storage object with a specified file path.
-     * @param filePath The filepath to the stored data
+     *
+     * @param filePath The filepath to the stored data.
      */
     public Storage (String filePath){
         this.filePath = filePath;
     }
 
     /**
-     * Loads the task list from a saved file
-     * @return The previously saved list of task
+     * Loads the task list from a saved file.
+     *
+     * @return The previously saved list of task.
      */
     public ArrayList<Task> loadFile() {
         File file = new File(this.filePath);
@@ -48,22 +53,25 @@ public class Storage {
                 boolean isDone = parts[1].trim().equals("1");
                 String description = parts[2].trim();
                 switch (taskType) {
-                    case "Todos":
-                        Task toDo = new ToDos(description, isDone);
-                        loadedTasks.add(toDo);
-                        break;
-                    case "Gabriel.Deadlines":
-                        Task deadline = new Deadlines(description, isDone, parts[3].trim().replace("by: ",", "));
-                        loadedTasks.add(deadline);
-                        break;
-                    case "Event":
-                        Task event = new Events(description, isDone, parts[3].trim().replace("from: ",", "), parts[4].trim().replace("by: ",", "));
-                        loadedTasks.add(event);
-                        break;
+                case "Todos":
+                    Task toDo = new ToDos(description, isDone);
+                    loadedTasks.add(toDo);
+                    break;
+                case "Gabriel.Deadlines":
+                    Task deadline = new Deadlines(description, isDone,
+                            parts[3].trim().replace("by: ",", "));
+                    loadedTasks.add(deadline);
+                    break;
+                case "Event":
+                    Task event = new Events(description, isDone,
+                            parts[3].trim().replace("from: ",", "),
+                            parts[4].trim().replace("by: ",", "));
+                    loadedTasks.add(event);
+                    break;
                 }
             }
             scanner.close();
-            System.out.println(Ui.Indentations);
+            System.out.println(INDENTATIONS);
             System.out.println("Loaded previous tasks successfully! Use the command 'list' to see them!");
 
         } catch (IOException e) {
@@ -74,14 +82,15 @@ public class Storage {
 
     /**
      * Saves the given list of task to a local storage file.
-     * @param myTask The list of task to be saved
+     *
+     * @param myTask The list of task to be saved.
      */
     public void saveTasks(ArrayList<Task> myTask) {
         File file =  new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {
-            boolean parentDirectoryCreated = parentDirectory.mkdir();
-            if (parentDirectoryCreated) {
+            boolean isParentDirectoryCreated = parentDirectory.mkdir();
+            if (isParentDirectoryCreated) {
                 System.out.println("Directory created!" +  parentDirectory.getPath());
             }
         }
@@ -92,7 +101,7 @@ public class Storage {
             }
         } catch (IOException e) {
             System.out.println("Ran into an error saving tasks");
-            System.out.println(Ui.Indentations);
+            System.out.println(INDENTATIONS);
         }
     }
 }

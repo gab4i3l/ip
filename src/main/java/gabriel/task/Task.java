@@ -7,16 +7,25 @@ import java.time.format.DateTimeFormatter;
  * @since 2026-01-22
  */
 public class Task {
+    /** The description of the task. */
     protected String description;
+
+    /** The status of the task. */
     protected boolean isDone;
+
+    /** The specified format user will input date and time. */
     public static final DateTimeFormatter USER_INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+
+    /** The specified format the date and time will be saved in file. */
     public static final DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /** The specified format the date and time will be displayed in responses. */
     public static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
 
 
     /**
      * Constructs a task with the specified description.
-     * @param description The description of the task
+     * @param description The description of the task.
      */
     public Task(String description) {
         this.description = description;
@@ -25,17 +34,17 @@ public class Task {
 
     /**
      * Constructs a task with the specified description and status.
-     * @param description The description of the task
-     * @param isDone The status of the task
+     * @param description The description of the task.
+     * @param isDone The status of the task.
      */
-    public Task(String description,boolean isDone) {
+    public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;
     }
 
     /**
      * Returns a visual representation of the task's completion status.
-     * @return "X" if the task is completed, or a blank space " "  if it is not completed
+     * @return "X" if the task is completed, or a blank space " "  if it is not completed.
      */
     public String getStatusIcon() {
         return (isDone ? "X": " ");
@@ -43,7 +52,7 @@ public class Task {
 
     /**
      * Updates the completion status of the task and prints a confirmation message.
-     * @param isDone Used to determine to mark the task as completed or not
+     * @param isDone Used to determine to mark the task as completed or not.
      */
     public void setDone(boolean isDone) {
         if (!isDone) {
@@ -51,8 +60,7 @@ public class Task {
             System.out.println("OK, I've marked this task as not done yet: \n" +
                     "[ ] " + getDescription());
 
-        }
-        else {
+        } else {
             this.isDone = true;
             System.out.println("Nice! I've marked this task as done: \n" +
                     "[X] " + getDescription());
@@ -61,7 +69,7 @@ public class Task {
 
     /**
      * Returns the description of the task.
-     * @return The task description string
+     * @return The task description string.
      */
     public String getDescription() {
         return description;
@@ -80,18 +88,19 @@ public class Task {
 
     /**
      * Returns a formatted string and status icon of the task.
-     * @return Formatted string and status of task
+     * @return Formatted string and status of task.
      */
     public String toString() {
         return "[" + getStatusIcon()+ "] " + getDescription();
     }
 
     /**
-     * Formats the task into string in specified format for file storage.
-     * @return Formatted string for file writing
+     * Formats the task into string in specified format for file storage..
+     * @return Formatted string for file writing.
      */
     public String writeToFile() {
-        return String.format("Task | %d | %s", this.checkDone(), this.description);
+        return String.format("Task | %d | %s",
+                this.checkDone(), this.description);
     }
 
 }

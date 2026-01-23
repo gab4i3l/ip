@@ -6,9 +6,11 @@ package gabriel.exception;
  * @since 2026-01-22
  */
 public class GabrielException extends Exception{
+
     /**
      * Constructs a new GabrielException instance with a specific error message.
-     * @param message The specific error message
+     *
+     * @param message The specific error message.
      */
     public GabrielException(String message){
         super(message);
