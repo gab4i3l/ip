@@ -42,7 +42,6 @@ public class Storage {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         try {
             if (!file.exists()) {
-                System.out.println("No previous data found. We are having a fresh start!");
                 return loadedTasks;
             }
             Scanner scanner = new Scanner(file);
@@ -57,7 +56,7 @@ public class Storage {
                     Task toDo = new ToDos(description, isDone);
                     loadedTasks.add(toDo);
                     break;
-                case "Gabriel.Deadlines":
+                case "Deadlines":
                     Task deadline = new Deadlines(description, isDone,
                             parts[3].trim().replace("by: ",", "));
                     loadedTasks.add(deadline);
@@ -71,9 +70,6 @@ public class Storage {
                 }
             }
             scanner.close();
-            System.out.println(INDENTATIONS);
-            System.out.println("Loaded previous tasks successfully! Use the command 'list' to see them!");
-
         } catch (IOException e) {
             System.out.println("Error! We cannot open the file!");
         }
