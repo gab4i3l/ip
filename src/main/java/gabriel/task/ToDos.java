@@ -12,7 +12,7 @@ public class ToDos extends Task {
      *
      * @param description The description of the todo task
      */
-    public ToDos(String description){
+    public ToDos(String description) {
         super(description);
     }
 
@@ -22,7 +22,7 @@ public class ToDos extends Task {
      * @param description The description of the todo task.
      * @param isDone The status of the todo task.
      */
-    public ToDos(String description, boolean isDone){
+    public ToDos(String description, boolean isDone) {
         super(description, isDone);
     }
 
@@ -32,7 +32,7 @@ public class ToDos extends Task {
      * @return Formatted string representing the todo task.
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "[T]" + super.toString();
     }
 

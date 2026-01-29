@@ -1,15 +1,17 @@
 package gabriel.storage;
 
-import gabriel.task.Deadlines;
-import gabriel.task.Events;
-import gabriel.task.Task;
-import gabriel.task.ToDos;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import gabriel.task.Deadlines;
+import gabriel.task.Events;
+import gabriel.task.Task;
+import gabriel.task.ToDos;
+
+
 
 /**
  * Handles loading and saving of data for Gabriel chatbot.
@@ -28,7 +30,7 @@ public class Storage {
      *
      * @param filePath The filepath to the stored data.
      */
-    public Storage (String filePath){
+    public Storage(String filePath) {
         this.filePath = filePath;
     }
 
@@ -47,7 +49,7 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(" \\|");
+                String[] parts = line.split(" \\s*\\|\\s*");
                 String taskType = parts[0].trim();
                 boolean isDone = parts[1].trim().equals("1");
                 String description = parts[2].trim();
@@ -58,15 +60,17 @@ public class Storage {
                     break;
                 case "Deadlines":
                     Task deadline = new Deadlines(description, isDone,
-                            parts[3].trim().replace("by: ",", "));
+                            parts[3].trim().replace("by: ", ""));
                     loadedTasks.add(deadline);
                     break;
                 case "Event":
                     Task event = new Events(description, isDone,
-                            parts[3].trim().replace("from: ",", "),
-                            parts[4].trim().replace("by: ",", "));
+                            parts[3].trim().replace("from: ",""),
+                            parts[4].trim().replace("to: ", ""));
                     loadedTasks.add(event);
                     break;
+                default:
+                    throw new IllegalArgumentException("Invalid task type!");
                 }
             }
             scanner.close();
@@ -82,12 +86,12 @@ public class Storage {
      * @param myTask The list of task to be saved.
      */
     public void saveTasks(ArrayList<Task> myTask) {
-        File file =  new File(this.filePath);
+        File file = new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {
             boolean isParentDirectoryCreated = parentDirectory.mkdir();
             if (isParentDirectoryCreated) {
-                System.out.println("Directory created!" +  parentDirectory.getPath());
+                System.out.println("Directory created!" + parentDirectory.getPath());
             }
         }
         try (PrintWriter writer = new PrintWriter(file)) {

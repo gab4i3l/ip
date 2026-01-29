@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 /**
  * Controller for the main GUI.
  */
@@ -34,10 +36,10 @@ public class MainWindow extends AnchorPane {
     public void setGabriel(Gabriel g) {
         gabriel = g;
         String welcomeText = gabriel.getWelcomeMessage();
-        dialogContainer.getChildren().addAll(DialogBox.getGabrielDialog(welcomeText,psyduckImage));
+        dialogContainer.getChildren().addAll(DialogBox.getGabrielDialog(welcomeText, psyduckImage));
         String loadingText = gabriel.getLoadingMessage();
         if (!loadingText.isEmpty()) {
-            dialogContainer.getChildren().addAll(DialogBox.getGabrielDialog(loadingText,psyduckImage));
+            dialogContainer.getChildren().addAll(DialogBox.getGabrielDialog(loadingText, psyduckImage));
         }
     }
 
@@ -54,5 +56,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getGabrielDialog(response, psyduckImage)
         );
         userInput.clear();
+        if (input.equalsIgnoreCase("bye")) {
+            Stage stage = (Stage) userInput.getScene().getWindow();
+            stage.close();
+        }
     }
 }

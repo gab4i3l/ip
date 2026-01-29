@@ -39,9 +39,9 @@ public class Deadlines extends Task {
      * @return Formatted string representing the deadline.
      */
     @Override
-    public String toString(){
-        return "[D]" + super.toString() +
-                " (by:" + by.format(Task.DISPLAY_FORMAT) + ")";
+    public String toString() {
+        return "[D]" + super.toString()
+                + " (by: " + by.format(Task.DISPLAY_FORMAT) + ")";
     }
 
     /**

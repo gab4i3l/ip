@@ -1,8 +1,8 @@
 package gabriel.parser;
 
-import gabriel.exception.GabrielException;
-
 import java.time.format.DateTimeParseException;
+
+import gabriel.exception.GabrielException;
 
 /**
  * Translate user input into commands and data the chatbot can work with.
@@ -38,8 +38,8 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             throw new GabrielException("I don't think that task exist...");
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed." +
-                    " Please check if your input is in the correct format!");
+            throw new GabrielException("The command cannot be processed."
+                    + " Please check if your input is in the correct format!");
         }
     }
 
@@ -61,8 +61,8 @@ public class Parser {
         } catch (StringIndexOutOfBoundsException e) {
             throw new GabrielException("The description given is empty!");
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed." +
-                    " Please check if your input is in the correct format!");
+            throw new GabrielException("The command cannot be processed."
+                    + " Please check if your input is in the correct format!");
         }
     }
 
@@ -87,19 +87,16 @@ public class Parser {
 
             String description = parts[0].trim();
             String by = parts[1].trim();
-            System.out.println(description);
-            System.out.println(by);
-
             return new String[]{description, by};
         } catch (StringIndexOutOfBoundsException e) {
-            throw new GabrielException("The deadline command must follow the format:" +
-                    " deadline <description> /by <time>");
+            throw new GabrielException("The deadline command must follow the format:"
+                    + " deadline <description> /by <time>");
         } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!" +
-                    " Please use the format: yyyy-MM-dd HHmm");
+            throw new GabrielException("I can't understand that date!"
+                    + " Please use the format: yyyy-MM-dd HHmm");
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed." +
-                    " Please check if your input is in the correct format!");
+            throw new GabrielException("The command cannot be processed."
+                    + " Please check if your input is in the correct format!");
         }
     }
 
@@ -107,7 +104,8 @@ public class Parser {
      * Extracts the description, start and end time of an Event task.
      * @param input The raw user input.
      * @return String array containing the description, start and end time of the Event task.
-     * @throws GabrielException if description and/or start time and/or end time is missing or input is in the wrong format.
+     * @throws GabrielException if description and/or start time and/or end time is missing or wrong format
+     *
      */
     public static String[] parseEvent(String input) throws GabrielException {
         try {
@@ -124,19 +122,19 @@ public class Parser {
             String to = timeParts[1].trim();
 
             if (from.isEmpty() || to.isEmpty()) {
-                System.out.println("The /from or /to is empty!");
+                throw new GabrielException("The /from or /to is empty!");
             }
 
             return new String[]{eventDescription, from, to};
         } catch (StringIndexOutOfBoundsException e) {
-            throw new GabrielException("The deadline command must follow the format:" +
-                    " event <description> /from <time> /to <time>");
+            throw new GabrielException("The event command must follow the format:"
+                    + " event <description> /from <time> /to <time>");
         } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!" +
-                    " Please use the format: yyyy-MM-dd HHmm");
+            throw new GabrielException("I can't understand that date!"
+                    + " Please use the format: yyyy-MM-dd HHmm");
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed." +
-                    " Please check if your input is in the correct format!");
+            throw new GabrielException("The command cannot be processed."
+                    + " Please check if your input is in the correct format!");
         }
     }
 
@@ -155,8 +153,8 @@ public class Parser {
             }
             return keyword;
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed." +
-                    " Please check if your input is in the correct format!");
+            throw new GabrielException("The command cannot be processed."
+                    + " Please check if your input is in the correct format!");
         }
     }
 }

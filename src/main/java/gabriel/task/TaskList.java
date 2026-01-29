@@ -59,25 +59,25 @@ public class TaskList {
      *
      * @param keyword The keyword to search for.
      */
-    public String findTasks(String keyword){
+    public String findTasks(String keyword) {
         int count = 1;
         boolean isFound = false;
         StringBuilder sb = new StringBuilder();
 
         for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)){
+            if (task.getDescription().contains(keyword)) {
                 if (!isFound) {
-                    sb.append("Here are the matching tasks in your list:");
+                    sb.append("Here are the matching tasks in your list: \n");
                     isFound = true;
                 }
-                sb.append(count).append(".").append(task.toString());
+                sb.append(count).append(".").append(task.toString()).append("\n");
                 count++;
             }
         }
 
-        if(!isFound) {
-            sb.append("Sorry we did not find any matching tasks." +
-                    " Perhaps the task does not exist or you can try other keywords!");
+        if (!isFound) {
+            sb.append("Sorry we did not find any matching tasks."
+                    + " Perhaps the task does not exist or you can try other keywords!");
         }
         return sb.toString();
     }

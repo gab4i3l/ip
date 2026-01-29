@@ -10,7 +10,7 @@ import gabriel.task.TaskList;
 import gabriel.task.ToDos;
 import gabriel.ui.Ui;
 
-import java.util.Scanner;
+import java.time.format.DateTimeParseException;
 
 /**
  * Main entry point for Gabriel chatbot.
@@ -42,6 +42,14 @@ public class Gabriel {
         return ui.getWelcomeMessage();
     }
 
+    public String getHelpMessage() {
+        return ui.getHelpMessage();
+    }
+
+    public String getExampleMessage() {
+        return ui.getExampleMessage();
+    }
+
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
             return "Loaded previous tasks successfully! Use the command 'list' to see them!";
@@ -49,10 +57,11 @@ public class Gabriel {
         return "";
     }
 
+
     /**
      * Lists all current task in the task list.
      */
-    public String performListCommand(){
+    public String performListCommand() {
         return ui.listTaskItems(taskList.getTasks());
     }
 
@@ -61,15 +70,15 @@ public class Gabriel {
      *
      * @param input The raw user input
      */
-    public String performMarkCommand(String input) {
-        try {
+    public String performMarkCommand(String input) throws GabrielException {
+        int markIndex = Parser.parseIndex(input);
+        Task task = taskList.getTasks().get(markIndex);
 
-            int markIndex = Parser.parseIndex(input);
-            taskList.getTasks().get(markIndex).setDone(true);
-            return ui.listTaskItems(taskList.getTasks());
-        } catch (GabrielException e) {
-            return ui.getErrorMessage(e.getMessage());
-        }
+        task.setDone(true);
+
+        String confirmation = "OK, I've marked this task as not done yet: \n"
+                + "[ ] " + task.getDescription() + "\n";
+        return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
     }
 
     /**
@@ -77,14 +86,16 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performUnmarkCommand(String input) {
-        try {
-            int unmarkIndex = Parser.parseIndex(input);
-            taskList.getTasks().get(unmarkIndex).setDone(false);
-            return ui.listTaskItems(taskList.getTasks());
-        } catch (GabrielException e) {
-            return ui.getErrorMessage(e.getMessage());
-        }
+    public String performUnmarkCommand(String input) throws GabrielException {
+        int unmarkIndex = Parser.parseIndex(input);
+        Task task = taskList.getTasks().get(unmarkIndex);
+
+        task.setUnDone(false);
+
+        String confirmation =  "OK, I've unmarked this task as not done yet: \n"
+                + "[ ] " + task.getDescription();
+
+        return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
     }
 
     /**
@@ -92,15 +103,11 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performToDoCommand(String input) {
-        try {
-            String toDoDetails = Parser.parseToDo(input);
-            ToDos newToDo = new ToDos(toDoDetails);
-            taskList.addTask(newToDo);
-            return ui.getTaskAddedMessage(newToDo,taskList.getSize());
-        } catch (GabrielException e) {
-            return ui.getErrorMessage(e.getMessage());
-        }
+    public String performToDoCommand(String input) throws GabrielException {
+        String toDoDetails = Parser.parseToDo(input);
+        ToDos newToDo = new ToDos(toDoDetails);
+        taskList.addTask(newToDo);
+        return ui.getTaskAddedMessage(newToDo, taskList.getSize());
     }
 
     /**
@@ -108,14 +115,15 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performDeadlineCommand(String input){
+    public String performDeadlineCommand(String input) throws GabrielException {
+        String[] deadlineDetails = Parser.parseDeadline(input);
         try {
-            String[] deadlineDetails = Parser.parseDeadline(input);
-            Deadlines newDeadLine = new Deadlines(deadlineDetails[0],deadlineDetails[1]);
+            Deadlines newDeadLine = new Deadlines(deadlineDetails[0], deadlineDetails[1]);
             taskList.addTask(newDeadLine);
-            return ui.getTaskAddedMessage(newDeadLine,taskList.getSize());
-        } catch (GabrielException e) {
-            return ui.getErrorMessage(e.getMessage());
+            return ui.getTaskAddedMessage(newDeadLine, taskList.getSize());
+        } catch (DateTimeParseException e) {
+            throw new GabrielException("I can't understand that date!"
+                    + " Please use the format: dd/mm/yyyy HHmm");
         }
     }
 
@@ -124,14 +132,16 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performEventCommand(String input){
+    public String performEventCommand(String input) throws GabrielException {
+        String[] eventDetails = Parser.parseEvent(input);
+
         try {
-            String[] eventDetails = Parser.parseEvent(input);
-            Events newEvent = new Events(eventDetails[0],eventDetails[1],eventDetails[2]);
+            Events newEvent = new Events(eventDetails[0], eventDetails[1], eventDetails[2]);
             taskList.addTask(newEvent);
-            return ui.getTaskAddedMessage(newEvent,taskList.getSize());
-        } catch (GabrielException e){
-            return ui.getErrorMessage(e.getMessage());
+            return ui.getTaskAddedMessage(newEvent, taskList.getSize());
+        } catch (DateTimeParseException e) {
+            throw new GabrielException("I can't understand that date!"
+                    + " Please use the format: dd/mm/yyy HHmm");
         }
     }
 
@@ -140,14 +150,10 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performDeleteCommand(String input){
-        try {
-            int deleteIndex = Parser.parseIndex(input);
-            Task removedTask = taskList.deleteTask(deleteIndex);
-            return ui.getTaskDeletedMessage(removedTask,taskList.getSize());
-        } catch (GabrielException e) {
-            return ui.getErrorMessage(e.getMessage());
-        }
+    public String performDeleteCommand(String input) throws GabrielException {
+        int deleteIndex = Parser.parseIndex(input);
+        Task removedTask = taskList.deleteTask(deleteIndex);
+        return ui.getTaskDeletedMessage(removedTask, taskList.getSize());
     }
 
     /**
@@ -155,7 +161,7 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performSaveCommand(String input){
+    public String performSaveCommand (String input) {
         storage.saveTasks(taskList.getTasks());
         return ui.getTaskSavedMessage();
     }
@@ -165,7 +171,7 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performFindCommand(String input){
+    public String performFindCommand (String input) {
         try {
             String keyword = Parser.parseFindKeyword(input);
             return taskList.findTasks(keyword);
@@ -178,30 +184,41 @@ public class Gabriel {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        String command = Parser.getCommand(input);
-        switch(command){
-            case "bye":
-                return ui.getExitMessage();
-            case "list":
-                return performListCommand();
-            case "mark":
-                return performMarkCommand(input);
-            case "unmark":
-                return performUnmarkCommand(input);
-            case "todo":
-                return performToDoCommand(input);
-            case "deadline":
-                return performDeadlineCommand(input);
-            case "event":
-                return performEventCommand(input);
-            case "delete":
-                return performDeleteCommand(input);
-            case "save":
-                return performSaveCommand(input);
-            case "find":
-                return performFindCommand(input);
-            default:
-                return ui.getWrongCommandMessage();
+        try {
+            String command = Parser.getCommand(input);
+
+            switch (command) {
+                case "bye":
+                    return ui.getExitMessage();
+                case "list":
+                    return performListCommand();
+                case "mark":
+                    return performMarkCommand(input);
+                case "unmark":
+                    return performUnmarkCommand(input);
+                case "todo":
+                    return performToDoCommand(input);
+                case "deadline":
+                    return performDeadlineCommand(input);
+                case "event":
+                    return performEventCommand(input);
+                case "delete":
+                    return performDeleteCommand(input);
+                case "save":
+                    return performSaveCommand(input);
+                case "find":
+                    return performFindCommand(input);
+                case "help":
+                    return getHelpMessage();
+                case "example":
+                    return getExampleMessage();
+                default:
+                    return ui.getWrongCommandMessage();
+            }
+        } catch (GabrielException e) {
+            return ui.getErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            return ui.getErrorMessage("Something went wrong: " + e.getMessage());
         }
     }
 }

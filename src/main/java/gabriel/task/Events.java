@@ -47,10 +47,10 @@ public class Events extends Task {
      * @return Formatted string representing the event.
      */
     @Override
-    public String toString(){
-        return "[E]" + super.toString() +
-                " (from:" + from.format(Task.DISPLAY_FORMAT) +
-                "to:" + to.format(Task.DISPLAY_FORMAT) + ")";
+    public String toString() {
+        return "[E]" + super.toString()
+                + " (from: " + from.format(Task.DISPLAY_FORMAT)
+                + "\n to: " + to.format(Task.DISPLAY_FORMAT) + ")";
     }
 
     /**

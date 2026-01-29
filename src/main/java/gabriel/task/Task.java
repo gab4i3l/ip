@@ -7,12 +7,6 @@ import java.time.format.DateTimeFormatter;
  * @since 2026-01-22
  */
 public class Task {
-    /** The description of the task. */
-    protected String description;
-
-    /** The status of the task. */
-    protected boolean isDone;
-
     /** The specified format user will input date and time. */
     public static final DateTimeFormatter USER_INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
 
@@ -22,6 +16,11 @@ public class Task {
     /** The specified format the date and time will be displayed in responses. */
     public static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
 
+    /** The description of the task. */
+    protected String description;
+
+    /** The status of the task. */
+    protected boolean isDone;
 
     /**
      * Constructs a task with the specified description.
@@ -47,7 +46,7 @@ public class Task {
      * @return "X" if the task is completed, or a blank space " "  if it is not completed.
      */
     public String getStatusIcon() {
-        return (isDone ? "X": " ");
+        return (isDone ? "X" : " ");
     }
 
     /**
@@ -55,16 +54,15 @@ public class Task {
      * @param isDone Used to determine to mark the task as completed or not.
      */
     public void setDone(boolean isDone) {
-        if (!isDone) {
-            this.isDone = false;
-            System.out.println("OK, I've marked this task as not done yet: \n" +
-                    "[ ] " + getDescription());
+        this.isDone = true;
+    }
 
-        } else {
-            this.isDone = true;
-            System.out.println("Nice! I've marked this task as done: \n" +
-                    "[X] " + getDescription());
-        }
+    /**
+     * Updates the completion status of the task and prints a confirmation message.
+     * @param isDone Used to determine to mark the task as completed or not.
+     */
+    public void setUnDone(boolean isDone) {
+        this.isDone = false;
     }
 
     /**
@@ -91,7 +89,7 @@ public class Task {
      * @return Formatted string and status of task.
      */
     public String toString() {
-        return "[" + getStatusIcon()+ "] " + getDescription();
+        return "[" + getStatusIcon() + "] " + getDescription();
     }
 
     /**
