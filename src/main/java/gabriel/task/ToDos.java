@@ -10,7 +10,7 @@ public class ToDos extends Task {
     /**
      * Constructs a new ToDos task with the specified description.
      *
-     * @param description The description of the todo task
+     * @param description The description of the todo task.
      */
     public ToDos(String description) {
         super(description);
@@ -33,7 +33,9 @@ public class ToDos extends Task {
      */
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        String result = "[T]" + super.toString();
+        assert result.startsWith("[T]") && !result.isBlank() : "Result should start with [T]";
+        return result;
     }
 
     /**
@@ -43,7 +45,9 @@ public class ToDos extends Task {
      */
     @Override
     public String writeToFile() {
-        return String.format("Todos | %d | %s",
+        String result = String.format("Todos | %d | %s",
                 this.checkDone(), this.description);
+        assert result.startsWith("Todos | ") : "Result should start with Todos";
+        return result;
     }
 }

@@ -23,6 +23,7 @@ public class TaskList {
      * @param tasks The specified list of tasks
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Internal task list cannot be null";
         this.tasks = tasks;
     }
 
@@ -32,7 +33,11 @@ public class TaskList {
      * @param task The task to be added.
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task";
+        int oldSize = tasks.size();
         this.tasks.add(task);
+
+        assert this.tasks.size() == oldSize + 1 : "Size should increase by 1";
     }
 
     /**
@@ -42,7 +47,11 @@ public class TaskList {
      * @return The deleted task.
      */
     public Task deleteTask(int index) {
-        return this.tasks.remove(index);
+        assert index >= 0 && index < this.tasks.size() : "Index should be non negative and within bounds";
+        int oldSize = this.tasks.size();
+        Task removedTask = this.tasks.remove(index);
+        assert this.tasks.size() == oldSize - 1 : "Size should decrease by 1";
+        return removedTask;
     }
 
     /**
@@ -58,8 +67,10 @@ public class TaskList {
      * Finds tasks that matches the given keyword.
      *
      * @param keyword The keyword to search for.
+     * @return the list of task with matching keyword.
      */
     public String findTasks(String keyword) {
+        assert keyword != null : "Keyword cannot be null";
         int count = 1;
         boolean isFound = false;
         StringBuilder sb = new StringBuilder();
@@ -79,7 +90,9 @@ public class TaskList {
             sb.append("Sorry we did not find any matching tasks."
                     + " Perhaps the task does not exist or you can try other keywords!");
         }
-        return sb.toString();
+        String result = sb.toString();
+        assert result != null && !result.isEmpty() : "Return string should not be null or empty";
+        return result;
     }
 
     /**

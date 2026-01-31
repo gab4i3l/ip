@@ -18,6 +18,7 @@ public class Deadlines extends Task {
      */
     public Deadlines(String description, String by) {
         super(description);
+        assert by != null && !by.isBlank() : "By should not be null or blank";
         this.by = LocalDateTime.parse(by, Task.USER_INPUT_FORMAT);
     }
 
@@ -30,6 +31,7 @@ public class Deadlines extends Task {
      */
     public Deadlines(String description, boolean isDone, String by) {
         super(description, isDone);
+        assert by != null && !by.isBlank() : "By should not be null or blank";
         this.by = LocalDateTime.parse(by, Task.FILE_FORMAT);
     }
 
@@ -40,8 +42,10 @@ public class Deadlines extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString()
+        String result = "[D]" + super.toString()
                 + " (by: " + by.format(Task.DISPLAY_FORMAT) + ")";
+        assert result.startsWith("[D]") : "Result should start with [D]";
+        return result;
     }
 
     /**
@@ -51,7 +55,9 @@ public class Deadlines extends Task {
      */
     @Override
     public String writeToFile() {
-        return String.format("Deadlines | %d | %s | by: %s",
+        String result = String.format("Deadlines | %d | %s | by: %s",
                 this.checkDone(), this.description, by.format(Task.FILE_FORMAT));
+        assert result.startsWith("Deadlines | ") : "Result should start with Deadlines | ";
+        return result;
     }
 }

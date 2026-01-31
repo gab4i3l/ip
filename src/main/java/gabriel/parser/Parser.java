@@ -13,24 +13,30 @@ public class Parser {
 
     /**
      * Extracts the command from the user input.
+     *
      * @param input The raw user input.
      * @return The command given by user.
      */
     public static String getCommand(String input) {
+        assert input != null : "The input must not be null!";
         String[] parts = input.split(" ");
         return parts[0].toLowerCase();
     }
 
     /**
      * Extracts the index pointing to a task from the user input.
+     *
      * @param input The raw user input.
      * @return The index in integer, pointing to a task.
      * @throws GabrielException if the input is not a number or in a wrong format.
      */
     public static int parseIndex(String input) throws GabrielException {
+        assert input != null : "The input must not be null!";
         try {
             String[] parts = input.split(" ");
-            return Integer.parseInt(parts[1]) - 1;
+            int index = Integer.parseInt(parts[1]);
+            assert index >= 0 : "Index should be greater or equal to zero";
+            return index - 1;
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new GabrielException("The number given is too big! You don't have that many tasks!");
         } catch (NumberFormatException e) {
@@ -45,11 +51,13 @@ public class Parser {
 
     /**
      * Extracts the description for a ToDo task from user input.
+     *
      * @param input The raw user input.
      * @return The description of the task.
      * @throws GabrielException if the description is empty or the input is in a wrong format.
      */
     public static String parseToDo(String input) throws GabrielException {
+        assert input != null : "The input must not be null!";
         try {
             String description = input.substring(5).trim();
 
@@ -68,11 +76,13 @@ public class Parser {
 
     /**
      * Extracts the description and due date of a Deadline task.
+     *
      * @param input The raw input from user due date of the Deadline task.
      * @return A String array containing the description and due date of the Deadline task.
      * @throws GabrielException if description and/or deadline is missing or input is in a wrong format.
      */
     public static String[] parseDeadline(String input) throws GabrielException {
+        assert input != null : "The input must not be null!";
         try {
             String content = input.substring(9).trim();
             String[] parts = content.split(" /by ");
@@ -102,12 +112,13 @@ public class Parser {
 
     /**
      * Extracts the description, start and end time of an Event task.
+     *
      * @param input The raw user input.
      * @return String array containing the description, start and end time of the Event task.
      * @throws GabrielException if description and/or start time and/or end time is missing or wrong format
-     *
      */
     public static String[] parseEvent(String input) throws GabrielException {
+        assert input != null : "The input must not be null!";
         try {
             String eventInput = input.substring(6).trim();
 
@@ -146,6 +157,7 @@ public class Parser {
      * @throws GabrielException when keyword is not given or command is in the wrong format.
      */
     public static String parseFindKeyword(String input) throws GabrielException {
+        assert input != null : "The input must not be null!";
         try {
             String keyword = input.substring(5).trim();
             if (keyword.isEmpty()) {

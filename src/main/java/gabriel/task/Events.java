@@ -48,9 +48,11 @@ public class Events extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString()
+        String result = "[E]" + super.toString()
                 + " (from: " + from.format(Task.DISPLAY_FORMAT)
                 + "\n to: " + to.format(Task.DISPLAY_FORMAT) + ")";
+        assert result.startsWith("[E]") : "Result should begin with [E]";
+        return result;
     }
 
     /**
@@ -60,7 +62,9 @@ public class Events extends Task {
      */
     @Override
     public String writeToFile() {
-        return String.format("Event | %d | %s | from: %s | to: %s",
+        String result = String.format("Event | %d | %s | from: %s | to: %s",
                 this.checkDone(), this.description, from.format(Task.FILE_FORMAT), to.format(Task.FILE_FORMAT));
+        assert result.startsWith("Event | ") : "Result should start with Event | ";
+        return result;
     }
 }

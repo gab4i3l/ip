@@ -11,8 +11,6 @@ import gabriel.task.Events;
 import gabriel.task.Task;
 import gabriel.task.ToDos;
 
-
-
 /**
  * Handles loading and saving of data for Gabriel chatbot.
  * @author Gabriel Phua
@@ -31,6 +29,7 @@ public class Storage {
      * @param filePath The filepath to the stored data.
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "filePath must not be null or empty";
         this.filePath = filePath;
     }
 
@@ -40,6 +39,7 @@ public class Storage {
      * @return The previously saved list of task.
      */
     public ArrayList<Task> loadFile() {
+        assert filePath != null && !filePath.isEmpty() : "filePath must not be null or empty";
         File file = new File(this.filePath);
         ArrayList<Task> loadedTasks = new ArrayList<>();
         try {
@@ -50,22 +50,29 @@ public class Storage {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\s*\\|\\s*");
+                assert parts.length >= 3 : "Saved task should have at least 3 parts";
                 String taskType = parts[0].trim();
-                boolean isDone = parts[1].trim().equals("1");
+                String isDoneToken = parts[1].trim();
+                assert isDoneToken.equals("0") || isDoneToken.equals("1") : "Status should only be 0 or 1";
+                boolean isDone = isDoneToken.equals("1");
                 String description = parts[2].trim();
+                assert !description.isEmpty() : "Description should not be null";
                 switch (taskType) {
                 case "Todos":
+                    assert parts.length == 3 : "Todos should have 3 parts";
                     Task toDo = new ToDos(description, isDone);
                     loadedTasks.add(toDo);
                     break;
                 case "Deadlines":
+                    assert parts.length == 4 : "Deadlines should have 4 parts";
                     Task deadline = new Deadlines(description, isDone,
                             parts[3].trim().replace("by: ", ""));
                     loadedTasks.add(deadline);
                     break;
                 case "Event":
+                    assert parts.length == 5 : "Events should have 5 parts";
                     Task event = new Events(description, isDone,
-                            parts[3].trim().replace("from: ",""),
+                            parts[3].trim().replace("from: ", ""),
                             parts[4].trim().replace("to: ", ""));
                     loadedTasks.add(event);
                     break;
@@ -86,6 +93,7 @@ public class Storage {
      * @param myTask The list of task to be saved.
      */
     public void saveTasks(ArrayList<Task> myTask) {
+        assert myTask != null : "The tasks must not be null!";
         File file = new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {
