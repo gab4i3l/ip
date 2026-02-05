@@ -76,7 +76,7 @@ public class Gabriel {
 
         task.setDone(true);
 
-        String confirmation = "OK, I've marked this task as not done yet: \n"
+        String confirmation = "OK, I've marked this task as done: \n"
                 + "[ ] " + task.getDescription() + "\n";
         return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
     }
