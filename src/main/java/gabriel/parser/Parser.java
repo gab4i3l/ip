@@ -1,7 +1,5 @@
 package gabriel.parser;
 
-import java.time.format.DateTimeParseException;
-
 import gabriel.exception.GabrielException;
 
 /**
@@ -32,11 +30,9 @@ public class Parser {
             String[] parts = input.split(" ");
             return Integer.parseInt(parts[1]) - 1;
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new GabrielException("The number given is too big! You don't have that many tasks!");
+            throw new GabrielException("The number you entered is invalid!");
         } catch (NumberFormatException e) {
             throw new GabrielException("That is not a number! Give me an actual number!");
-        } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("I don't think that task exist...");
         } catch (Exception e) {
             throw new GabrielException("The command cannot be processed."
                     + " Please check if your input is in the correct format!");
@@ -75,25 +71,40 @@ public class Parser {
     public static String[] parseDeadline(String input) throws GabrielException {
         try {
             String content = input.substring(9).trim();
-            String[] parts = content.split(" /by ");
 
-            if (parts[0].trim().isEmpty()) {
+            if (content.isEmpty()) {
+                throw new GabrielException("The deadline command must follow the format:"
+                        + " deadline <description> /by <time>");
+            }
+
+            if (content.startsWith("/by")) {
                 throw new GabrielException("The description given is empty!");
             }
 
-            if (parts[1].trim().isEmpty()) {
-                throw new GabrielException("The deadline given is empty!");
+            String[] parts = content.split("/by", 2);
+
+            if (parts.length < 2) {
+                throw new GabrielException("The deadline command must follow the format:"
+                        + " deadline <description> /by <time>");
             }
 
             String description = parts[0].trim();
             String by = parts[1].trim();
+
+            if (description.isEmpty()) {
+                throw new GabrielException("The description given is empty!");
+            }
+
+            if (by.isEmpty()) {
+                throw new GabrielException("The deadline given is empty!");
+            }
+
             return new String[]{description, by};
         } catch (StringIndexOutOfBoundsException e) {
             throw new GabrielException("The deadline command must follow the format:"
                     + " deadline <description> /by <time>");
-        } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!"
-                    + " Please use the format: yyyy-MM-dd HHmm");
+        } catch (GabrielException e) {
+            throw e;
         } catch (Exception e) {
             throw new GabrielException("The command cannot be processed."
                     + " Please check if your input is in the correct format!");
@@ -111,13 +122,29 @@ public class Parser {
         try {
             String eventInput = input.substring(6).trim();
 
+            if (eventInput.isEmpty()) {
+                throw new GabrielException("The event command must follow the format:"
+                        + " event <description> /from <time> /to <time>");
+            }
+
             if (eventInput.startsWith("/from")) {
                 throw new GabrielException("The description of an event cannot be empty!");
             }
 
-            String[] eventParts = eventInput.split(" /from ");
+            String[] eventParts = eventInput.split("/from");
+            if (eventParts.length < 2) {
+                throw new GabrielException("The event command must follow the format:"
+                        + " event <description> /from <time> /to <time>");
+            }
+
             String eventDescription = eventParts[0].trim();
-            String[] timeParts = eventParts[1].split(" /to ");
+            String[] timeParts = eventParts[1].split("/to");
+
+            if (timeParts.length < 2) {
+                throw new GabrielException("The event command must follow the format:"
+                        + " event <description> /from <time> /to <time>");
+            }
+
             String from = timeParts[0].trim();
             String to = timeParts[1].trim();
 
@@ -129,9 +156,8 @@ public class Parser {
         } catch (StringIndexOutOfBoundsException e) {
             throw new GabrielException("The event command must follow the format:"
                     + " event <description> /from <time> /to <time>");
-        } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!"
-                    + " Please use the format: yyyy-MM-dd HHmm");
+        } catch (GabrielException e) {
+            throw e;
         } catch (Exception e) {
             throw new GabrielException("The command cannot be processed."
                     + " Please check if your input is in the correct format!");
@@ -152,6 +178,8 @@ public class Parser {
                 throw new GabrielException("The keyword cannot be empty!");
             }
             return keyword;
+        } catch (GabrielException e) {
+            throw e;
         } catch (Exception e) {
             throw new GabrielException("The command cannot be processed."
                     + " Please check if your input is in the correct format!");

@@ -1,5 +1,7 @@
 package gabriel;
 
+import java.time.format.DateTimeParseException;
+
 import gabriel.exception.GabrielException;
 import gabriel.parser.Parser;
 import gabriel.storage.Storage;
@@ -10,7 +12,7 @@ import gabriel.task.TaskList;
 import gabriel.task.ToDos;
 import gabriel.ui.Ui;
 
-import java.time.format.DateTimeParseException;
+
 
 /**
  * Main entry point for Gabriel chatbot.
@@ -57,7 +59,6 @@ public class Gabriel {
         return "";
     }
 
-
     /**
      * Lists all current task in the task list.
      */
@@ -72,13 +73,18 @@ public class Gabriel {
      */
     public String performMarkCommand(String input) throws GabrielException {
         int markIndex = Parser.parseIndex(input);
-        Task task = taskList.getTasks().get(markIndex);
 
-        task.setDone(true);
+        try {
+            Task task = taskList.getTasks().get(markIndex);
 
-        String confirmation = "OK, I've marked this task as done: \n"
-                + "[ ] " + task.getDescription() + "\n";
-        return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+            task.setDone(true);
+
+            String confirmation = "OK, I've marked this task as done: \n"
+                    + "[ ] " + task.getDescription() + "\n";
+            return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+        } catch (IndexOutOfBoundsException e) {
+            throw new GabrielException("The index given is out of range!");
+        }
     }
 
     /**
@@ -87,15 +93,19 @@ public class Gabriel {
      * @param input The raw user input.
      */
     public String performUnmarkCommand(String input) throws GabrielException {
-        int unmarkIndex = Parser.parseIndex(input);
-        Task task = taskList.getTasks().get(unmarkIndex);
+        try {
+            int unmarkIndex = Parser.parseIndex(input);
+            Task task = taskList.getTasks().get(unmarkIndex);
 
-        task.setUnDone(false);
+            task.setUnDone(false);
 
-        String confirmation =  "OK, I've unmarked this task as not done yet: \n"
-                + "[ ] " + task.getDescription();
+            String confirmation = "OK, I've unmarked this task as not done yet: \n"
+                    + "[ ] " + task.getDescription();
 
-        return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+            return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+        } catch (IndexOutOfBoundsException e) {
+            throw new GabrielException("The index given is out of range!");
+        }
     }
 
     /**
@@ -128,7 +138,7 @@ public class Gabriel {
     }
 
     /**
-     * Adds a Event task into the current task list.
+     * Adds an Event task into the current task list.
      *
      * @param input The raw user input.
      */
@@ -151,9 +161,13 @@ public class Gabriel {
      * @param input The raw user input.
      */
     public String performDeleteCommand(String input) throws GabrielException {
-        int deleteIndex = Parser.parseIndex(input);
-        Task removedTask = taskList.deleteTask(deleteIndex);
-        return ui.getTaskDeletedMessage(removedTask, taskList.getSize());
+        try {
+            int deleteIndex = Parser.parseIndex(input);
+            Task removedTask = taskList.deleteTask(deleteIndex);
+            return ui.getTaskDeletedMessage(removedTask, taskList.getSize());
+        } catch (IndexOutOfBoundsException e) {
+            throw new GabrielException("The index given is out of range!");
+        }
     }
 
     /**
@@ -161,7 +175,7 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performSaveCommand (String input) {
+    public String performSaveCommand(String input) {
         storage.saveTasks(taskList.getTasks());
         return ui.getTaskSavedMessage();
     }
@@ -171,7 +185,7 @@ public class Gabriel {
      *
      * @param input The raw user input.
      */
-    public String performFindCommand (String input) {
+    public String performFindCommand(String input) {
         try {
             String keyword = Parser.parseFindKeyword(input);
             return taskList.findTasks(keyword);
@@ -188,32 +202,32 @@ public class Gabriel {
             String command = Parser.getCommand(input);
 
             switch (command) {
-                case "bye":
-                    return ui.getExitMessage();
-                case "list":
-                    return performListCommand();
-                case "mark":
-                    return performMarkCommand(input);
-                case "unmark":
-                    return performUnmarkCommand(input);
-                case "todo":
-                    return performToDoCommand(input);
-                case "deadline":
-                    return performDeadlineCommand(input);
-                case "event":
-                    return performEventCommand(input);
-                case "delete":
-                    return performDeleteCommand(input);
-                case "save":
-                    return performSaveCommand(input);
-                case "find":
-                    return performFindCommand(input);
-                case "help":
-                    return getHelpMessage();
-                case "example":
-                    return getExampleMessage();
-                default:
-                    return ui.getWrongCommandMessage();
+            case "bye":
+                return ui.getExitMessage();
+            case "list":
+                return performListCommand();
+            case "mark":
+                return performMarkCommand(input);
+            case "unmark":
+                return performUnmarkCommand(input);
+            case "todo":
+                return performToDoCommand(input);
+            case "deadline":
+                return performDeadlineCommand(input);
+            case "event":
+                return performEventCommand(input);
+            case "delete":
+                return performDeleteCommand(input);
+            case "save":
+                return performSaveCommand(input);
+            case "find":
+                return performFindCommand(input);
+            case "help":
+                return getHelpMessage();
+            case "example":
+                return getExampleMessage();
+            default:
+                return ui.getWrongCommandMessage();
             }
         } catch (GabrielException e) {
             return ui.getErrorMessage(e.getMessage());

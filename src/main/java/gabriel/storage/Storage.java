@@ -65,7 +65,7 @@ public class Storage {
                     break;
                 case "Event":
                     Task event = new Events(description, isDone,
-                            parts[3].trim().replace("from: ",""),
+                            parts[3].trim().replace("from: ", ""),
                             parts[4].trim().replace("to: ", ""));
                     loadedTasks.add(event);
                     break;
