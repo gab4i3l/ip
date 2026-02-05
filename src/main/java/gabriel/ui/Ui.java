@@ -18,6 +18,11 @@ public class Ui {
                 + "Enter a command or input 'help' to know more!\n";
     }
 
+    public String getLoadedMessage() {
+        return "Loaded previous tasks successfully! Use the command 'list' to see them!";
+    }
+
+
     public String getHelpMessage() {
         return "These are the available commands and their formats: \n"
                 + "List current tasks: list\n"

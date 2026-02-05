@@ -113,10 +113,10 @@ public class Parser {
 
     /**
      * Extracts the description, start and end time of an Event task.
+     *
      * @param input The raw user input.
      * @return String array containing the description, start and end time of the Event task.
      * @throws GabrielException if description and/or start time and/or end time is missing or wrong format
-     *
      */
     public static String[] parseEvent(String input) throws GabrielException {
         try {

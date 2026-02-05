@@ -54,7 +54,7 @@ public class Gabriel {
 
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
-            return "Loaded previous tasks successfully! Use the command 'list' to see them!";
+           return ui.getLoadedMessage();
         }
         return "";
     }
@@ -79,11 +79,13 @@ public class Gabriel {
 
             task.setDone(true);
 
+            save();
+
             String confirmation = "OK, I've marked this task as done: \n"
-                    + "[ ] " + task.getDescription() + "\n";
+                    + "[X] " + task.getDescription() + "\n";
             return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("The index given is out of range!");
+            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
         }
     }
 
@@ -99,12 +101,14 @@ public class Gabriel {
 
             task.setUnDone(false);
 
+            save();
+
             String confirmation = "OK, I've unmarked this task as not done yet: \n"
                     + "[ ] " + task.getDescription();
 
             return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("The index given is out of range!");
+            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
         }
     }
 
@@ -117,6 +121,7 @@ public class Gabriel {
         String toDoDetails = Parser.parseToDo(input);
         ToDos newToDo = new ToDos(toDoDetails);
         taskList.addTask(newToDo);
+        save();
         return ui.getTaskAddedMessage(newToDo, taskList.getSize());
     }
 
@@ -130,6 +135,7 @@ public class Gabriel {
         try {
             Deadlines newDeadLine = new Deadlines(deadlineDetails[0], deadlineDetails[1]);
             taskList.addTask(newDeadLine);
+            save();
             return ui.getTaskAddedMessage(newDeadLine, taskList.getSize());
         } catch (DateTimeParseException e) {
             throw new GabrielException("I can't understand that date!"
@@ -148,6 +154,7 @@ public class Gabriel {
         try {
             Events newEvent = new Events(eventDetails[0], eventDetails[1], eventDetails[2]);
             taskList.addTask(newEvent);
+            save();
             return ui.getTaskAddedMessage(newEvent, taskList.getSize());
         } catch (DateTimeParseException e) {
             throw new GabrielException("I can't understand that date!"
@@ -164,18 +171,18 @@ public class Gabriel {
         try {
             int deleteIndex = Parser.parseIndex(input);
             Task removedTask = taskList.deleteTask(deleteIndex);
+            save();
             return ui.getTaskDeletedMessage(removedTask, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("The index given is out of range!");
+            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
         }
     }
 
     /**
      * Saves current task list into a file.
      *
-     * @param input The raw user input.
      */
-    public String performSaveCommand(String input) {
+    public String performSaveCommand() {
         storage.saveTasks(taskList.getTasks());
         return ui.getTaskSavedMessage();
     }
@@ -192,6 +199,13 @@ public class Gabriel {
         } catch (GabrielException e) {
             return ui.getErrorMessage(e.getMessage());
         }
+    }
+
+    /**
+     * Saves user task to allow autosave after a command
+     */
+    private void save() {
+        storage.saveTasks(taskList.getTasks());
     }
 
     /**
@@ -219,7 +233,7 @@ public class Gabriel {
             case "delete":
                 return performDeleteCommand(input);
             case "save":
-                return performSaveCommand(input);
+                return performSaveCommand();
             case "find":
                 return performFindCommand(input);
             case "help":
