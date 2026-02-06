@@ -54,7 +54,7 @@ public class Gabriel {
 
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
-           return ui.getLoadedMessage();
+           return ui.getLoadedMessage(); // Recommended by AI to abstract it to ui
         }
         return "";
     }
@@ -81,11 +81,11 @@ public class Gabriel {
 
             save();
 
-            String confirmation = "OK, I've marked this task as done: \n"
-                    + "[X] " + task.getDescription() + "\n";
+            String confirmation = ui.getTaskMarkedMessage(task);
             return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
+            throw new GabrielException("That task number doesn't exist. "
+                    + "Type list to see tasks."); //Message recommended by AI
         }
     }
 
@@ -103,8 +103,7 @@ public class Gabriel {
 
             save();
 
-            String confirmation = "OK, I've unmarked this task as not done yet: \n"
-                    + "[ ] " + task.getDescription();
+            String confirmation = ui.getTaskUnmarkedMessage(task);
 
             return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
