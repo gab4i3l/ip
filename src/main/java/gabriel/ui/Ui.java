@@ -26,7 +26,8 @@ public class Ui {
      * @return Loading message for the user.
      */
     public String getLoadedMessage() {
-        return "Loaded previous tasks successfully! Use the command 'list' to see them!";
+        return "Loaded previous tasks successfully!" + "Use the command 'list' to see them!";
+        //Recommended by AI to abstract messages from Gabriel completely
     }
 
     /**

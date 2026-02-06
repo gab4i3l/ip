@@ -82,10 +82,10 @@ public class Gabriel {
      * @return Task loading messsage.
      */
     public String getLoadingMessage() {
-        if (taskList.getSize() > 0) {
+         if (taskList.getSize() > 0) {
            return ui.getLoadedMessage(); // Recommended by AI to abstract it to ui
-        }
-        return "";
+         }
+         return "";
     }
 
     /**

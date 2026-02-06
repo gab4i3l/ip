@@ -18,9 +18,6 @@ import gabriel.task.ToDos;
  * @since 2026-01-22
  */
 public class Storage {
-    /** Indentations for display purpose. */
-    private static final String INDENTATIONS = "\u2500".repeat(50);
-
     /** The file path to load or save tasks. */
     private String filePath;
 
@@ -85,7 +82,7 @@ public class Storage {
      * @param myTask The list of task to be saved.
      * @throws GabrielException when there is error saving tasks.
      */
-    public void saveTasks(ArrayList<Task> myTask) throws GabrielException{
+    public void saveTasks(ArrayList<Task> myTask) throws GabrielException {
         File file = new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {

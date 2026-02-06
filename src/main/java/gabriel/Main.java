@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * @author JavaFX tutorial
- * Credits to JavaFX tutorial for the FXML code,MainWindow and DialogBox layout
+ * Credits to JavaFX tutorial for the FXML code,MainWindow and DialogBox layout.
  * A GUI for Gabriel using FXML.
  *
  */
