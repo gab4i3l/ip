@@ -20,7 +20,6 @@ public class Ui {
                 + "Enter a command or input 'help' to know more!\n";
     }
 
-
     /**
      * Display loading message to user on chatbot start up.
      *
@@ -29,7 +28,6 @@ public class Ui {
     public String getLoadedMessage() {
         return "Loaded previous tasks successfully! Use the command 'list' to see them!";
     }
-
 
     /**
      * Display help message to user.
@@ -48,7 +46,6 @@ public class Ui {
                 + "Find a task: find <keyword>\n"
                 + "Input 'example' to see some example commands!";
     }
-
 
     /**
      * Display example message to user.
@@ -70,7 +67,7 @@ public class Ui {
      *
      * @return Task count message for the user.
      */
-    private String formatTaskCount(int size) {
+    public String formatTaskCount(int size) {
         return "Now you have " + size + " tasks in your list.";
     }
 
@@ -81,15 +78,6 @@ public class Ui {
      */
     public String getExitMessage() {
         return "Bye. Hope to see you again soon!\n";
-    }
-
-    /**
-     * Display task count to user.
-     *
-     * @return Task count message for the user.
-     */
-    public String getTaskCountMessage(Task task, int size) {
-        return formatTaskCount(size);
     }
 
     /**

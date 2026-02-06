@@ -82,7 +82,7 @@ public class Gabriel {
             save();
 
             String confirmation = ui.getTaskMarkedMessage(task);
-            return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+            return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
             throw new GabrielException("That task number doesn't exist. "
                     + "Type list to see tasks."); //Message recommended by AI
@@ -105,7 +105,7 @@ public class Gabriel {
 
             String confirmation = ui.getTaskUnmarkedMessage(task);
 
-            return confirmation + "\n" + ui.getTaskCountMessage(task, taskList.getSize());
+            return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
             throw new GabrielException("That task number doesn't exist Type list to see tasks.");
         }
