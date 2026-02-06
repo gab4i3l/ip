@@ -24,6 +24,7 @@ public class Task {
 
     /**
      * Constructs a task with the specified description.
+     *
      * @param description The description of the task.
      */
     public Task(String description) {
@@ -33,6 +34,7 @@ public class Task {
 
     /**
      * Constructs a task with the specified description and status.
+     *
      * @param description The description of the task.
      * @param isDone The status of the task.
      */
@@ -43,6 +45,7 @@ public class Task {
 
     /**
      * Returns a visual representation of the task's completion status.
+     *
      * @return "X" if the task is completed, or a blank space " "  if it is not completed.
      */
     public String getStatusIcon() {
@@ -50,23 +53,22 @@ public class Task {
     }
 
     /**
-     * Updates the completion status of the task and prints a confirmation message.
-     * @param isDone Used to determine to mark the task as completed or not.
+     * Marks a task as done.
      */
-    public void setDone(boolean isDone) {
+    public void setDone() {
         this.isDone = true;
     }
 
     /**
-     * Updates the completion status of the task and prints a confirmation message.
-     * @param isDone Used to determine to mark the task as completed or not.
+     * Mark a task as not done.
      */
-    public void setUnDone(boolean isDone) {
+    public void setUndone() {
         this.isDone = false;
     }
 
     /**
      * Returns the description of the task.
+     *
      * @return The task description string.
      */
     public String getDescription() {
@@ -75,6 +77,7 @@ public class Task {
 
     /**
      * Returns an integer representation of task's completion status.
+     *
      * @return 1 if task is done, 0 otherwise.
      */
     public int checkDone() {
@@ -86,6 +89,7 @@ public class Task {
 
     /**
      * Returns a formatted string and status icon of the task.
+     *
      * @return Formatted string and status of task.
      */
     public String toString() {
@@ -93,7 +97,8 @@ public class Task {
     }
 
     /**
-     * Formats the task into string in specified format for file storage..
+     * Formats the task into string in specified format for file storage.
+     *
      * @return Formatted string for file writing.
      */
     public String writeToFile() {

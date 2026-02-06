@@ -8,6 +8,20 @@ import gabriel.exception.GabrielException;
  * @since 2026-01-22
  */
 public class Parser {
+    /** Generic Error message. */
+    private static final String GENERIC_ERROR_MESSAGE = "The command cannot be processed."
+            + " Please check if your input is in the correct format!";
+
+    /** Error message when improper deadline command is given. */
+    private static final String DEADLINE_FORMAT_ERROR_MESSAGE = "The deadline command must follow the format:\n"
+            + "deadline <description> /by <time>";
+
+    /** Error message when improper event command is given. */
+    private static final String EVENT_FORMAT_ERROR_MESSAGE = "The event command must follow the format:"
+            + " event <description> /from <time> /to <time>";
+
+    /** Error message when an empty description is given. */
+    private static final String EMPTY_DESCRIPTION_MESSAGE = "The description given cannot be empty!";
 
     /**
      * Extracts the command from the user input.
@@ -34,8 +48,7 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new GabrielException("That is not a number! Give me an actual number!");
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed."
-                    + " Please check if your input is in the correct format!");
+            throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
     }
 
@@ -55,10 +68,9 @@ public class Parser {
 
             return description;
         } catch (StringIndexOutOfBoundsException e) {
-            throw new GabrielException("The description given is empty!");
+            throw new GabrielException(EMPTY_DESCRIPTION_MESSAGE);
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed."
-                    + " Please check if your input is in the correct format!");
+            throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
     }
 
@@ -73,26 +85,24 @@ public class Parser {
             String content = input.substring(9).trim();
 
             if (content.isEmpty()) {
-                throw new GabrielException("The deadline command must follow the format:"
-                        + " deadline <description> /by <time>");
+                throw new GabrielException(DEADLINE_FORMAT_ERROR_MESSAGE);
             }
 
             if (content.startsWith("/by")) {
-                throw new GabrielException("The description given is empty!");
+                throw new GabrielException(EMPTY_DESCRIPTION_MESSAGE);
             }
 
             String[] parts = content.split("/by", 2);
 
             if (parts.length < 2) {
-                throw new GabrielException("The deadline command must follow the format:"
-                        + " deadline <description> /by <time>");
+                throw new GabrielException(DEADLINE_FORMAT_ERROR_MESSAGE);
             }
 
             String description = parts[0].trim();
             String by = parts[1].trim();
 
             if (description.isEmpty()) {
-                throw new GabrielException("The description given is empty!");
+                throw new GabrielException(EMPTY_DESCRIPTION_MESSAGE);
             }
 
             if (by.isEmpty()) {
@@ -101,13 +111,11 @@ public class Parser {
 
             return new String[]{description, by};
         } catch (StringIndexOutOfBoundsException e) {
-            throw new GabrielException("The deadline command must follow the format:"
-                    + " deadline <description> /by <time>");
+            throw new GabrielException(DEADLINE_FORMAT_ERROR_MESSAGE);
         } catch (GabrielException e) {
             throw e;
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed."
-                    + " Please check if your input is in the correct format!");
+            throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
     }
 
@@ -123,26 +131,23 @@ public class Parser {
             String eventInput = input.substring(6).trim();
 
             if (eventInput.isEmpty()) {
-                throw new GabrielException("The event command must follow the format:"
-                        + " event <description> /from <time> /to <time>");
+                throw new GabrielException(EVENT_FORMAT_ERROR_MESSAGE);
             }
 
             if (eventInput.startsWith("/from")) {
-                throw new GabrielException("The description of an event cannot be empty!");
+                throw new GabrielException(EMPTY_DESCRIPTION_MESSAGE);
             }
 
             String[] eventParts = eventInput.split("/from");
             if (eventParts.length < 2) {
-                throw new GabrielException("The event command must follow the format:"
-                        + " event <description> /from <time> /to <time>");
+                throw new GabrielException(EVENT_FORMAT_ERROR_MESSAGE);
             }
 
             String eventDescription = eventParts[0].trim();
             String[] timeParts = eventParts[1].split("/to");
 
             if (timeParts.length < 2) {
-                throw new GabrielException("The event command must follow the format:"
-                        + " event <description> /from <time> /to <time>");
+                throw new GabrielException(EVENT_FORMAT_ERROR_MESSAGE);
             }
 
             String from = timeParts[0].trim();
@@ -154,13 +159,11 @@ public class Parser {
 
             return new String[]{eventDescription, from, to};
         } catch (StringIndexOutOfBoundsException e) {
-            throw new GabrielException("The event command must follow the format:"
-                    + " event <description> /from <time> /to <time>");
+            throw new GabrielException(EVENT_FORMAT_ERROR_MESSAGE);
         } catch (GabrielException e) {
             throw e;
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed."
-                    + " Please check if your input is in the correct format!");
+            throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
     }
 
@@ -181,8 +184,7 @@ public class Parser {
         } catch (GabrielException e) {
             throw e;
         } catch (Exception e) {
-            throw new GabrielException("The command cannot be processed."
-                    + " Please check if your input is in the correct format!");
+            throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
     }
 }

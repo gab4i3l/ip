@@ -6,12 +6,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import gabriel.exception.GabrielException;
 import gabriel.task.Deadlines;
 import gabriel.task.Events;
 import gabriel.task.Task;
 import gabriel.task.ToDos;
-
-
 
 /**
  * Handles loading and saving of data for Gabriel chatbot.
@@ -84,24 +83,20 @@ public class Storage {
      * Saves the given list of task to a local storage file.
      *
      * @param myTask The list of task to be saved.
+     * @throws GabrielException when there is error saving tasks.
      */
-    public void saveTasks(ArrayList<Task> myTask) {
+    public void saveTasks(ArrayList<Task> myTask) throws GabrielException{
         File file = new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {
-            boolean isParentDirectoryCreated = parentDirectory.mkdir();
-            if (isParentDirectoryCreated) {
-                System.out.println("Directory created!" + parentDirectory.getPath());
-            }
+             parentDirectory.mkdirs();
         }
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task: myTask) {
                 writer.println(task.writeToFile());
-                System.out.println("Saved: " + task.toString());
             }
         } catch (IOException e) {
-            System.out.println("Ran into an error saving tasks");
-            System.out.println(INDENTATIONS);
+            throw new GabrielException("Ran into an error saving tasks. ");
         }
     }
 }

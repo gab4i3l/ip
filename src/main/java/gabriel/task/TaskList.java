@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @since 2026-01-22
  */
 public class TaskList {
+    /** A container that contains the list of tasks. */
     private ArrayList<Task> tasks;
 
     /**
@@ -70,7 +71,7 @@ public class TaskList {
                     sb.append("Here are the matching tasks in your list: \n");
                     isFound = true;
                 }
-                sb.append(count).append(".").append(task.toString()).append("\n");
+                sb.append(count).append(". ").append(task.toString()).append("\n");
                 count++;
             }
         }

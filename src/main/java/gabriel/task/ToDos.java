@@ -6,7 +6,6 @@ package gabriel.task;
  * @since 2026-01-22
  */
 public class ToDos extends Task {
-
     /**
      * Constructs a new ToDos task with the specified description.
      *

@@ -12,8 +12,6 @@ import gabriel.task.TaskList;
 import gabriel.task.ToDos;
 import gabriel.ui.Ui;
 
-
-
 /**
  * Main entry point for Gabriel chatbot.
  * @author Gabriel Phua
@@ -71,7 +69,11 @@ public class Gabriel {
      * Saves user task to allow autosave after a command
      */
     public void save() {
-        storage.saveTasks(taskList.getTasks());
+        try {
+            storage.saveTasks(taskList.getTasks());
+        } catch (GabrielException e) {
+            ui.getErrorMessage(e.getMessage());
+        }
     }
 
     /**
@@ -107,7 +109,7 @@ public class Gabriel {
         try {
             Task task = taskList.getTasks().get(markIndex);
 
-            task.setDone(true);
+            task.setDone();
 
             save();
 
@@ -130,7 +132,7 @@ public class Gabriel {
             int unmarkIndex = Parser.parseIndex(input);
             Task task = taskList.getTasks().get(unmarkIndex);
 
-            task.setUnDone(false);
+            task.setUndone();
 
             save();
 
@@ -218,8 +220,12 @@ public class Gabriel {
      * @return Task saved confirmation message.
      */
     public String performSaveCommand() {
-        storage.saveTasks(taskList.getTasks());
-        return ui.getTaskSavedMessage();
+        try {
+            storage.saveTasks(taskList.getTasks());
+            return ui.getTaskSavedMessage();
+        } catch (GabrielException e) {
+            return ui.getErrorMessage(e.getMessage());
+        }
     }
 
     /**
