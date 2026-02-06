@@ -63,21 +63,34 @@ public class Ui {
     }
 
     /**
-     * Display task count to user.
-     *
-     * @return Task count message for the user.
-     */
-    public String formatTaskCount(int size) {
-        return "Now you have " + size + " tasks in your list.";
-    }
-
-    /**
      * Display exit message to user on chatbot termination.
      *
      * @return Exit message for the user.
      */
     public String getExitMessage() {
         return "Bye. Hope to see you again soon!\n";
+    }
+
+    /**
+     * Confirmation message to user that a task has been successfully marked in the task list.
+     *
+     * @param task The task to be marked.
+     * @return Confirmation message that task is marked for the user.
+     */
+    public String getTaskMarkedMessage(Task task) {
+        return "OK, I've marked this task as done: \n"
+                + "[X] " + task.getDescription() + "\n";
+    }
+
+    /**
+     * Confirmation message to user that a task has been successfully unmarked in the task list.
+     *
+     * @param task The task to be unmarked.
+     * @return Confirmation message that task is unmarked for the user.
+     */
+    public String getTaskUnmarkedMessage(Task task) {
+        return "OK, I've unmarked this task as not done yet: \n"
+                + "[ ] " + task.getDescription();
     }
 
     /**
@@ -129,25 +142,12 @@ public class Ui {
     }
 
     /**
-     * Confirmation message to user that a task has been successfully marked in the task list.
-     * @param task The task to be marked.
-     * @return Confirmation message that task is marked for the user.
-     */
-    public String getTaskMarkedMessage(Task task) {
-        return "OK, I've marked this task as done: \n"
-                + "[X] " + task.getDescription() + "\n";
-    }
-
-
-    /**
-     * Confirmation message to user that a task has been successfully unmarked in the task list.
+     * Display task count to user.
      *
-     * @param task The task to be unmarked.
-     * @return Confirmation message that task is unmarked for the user.
+     * @return Task count message for the user.
      */
-    public String getTaskUnmarkedMessage(Task task) {
-        return "OK, I've unmarked this task as not done yet: \n"
-                + "[ ] " + task.getDescription();
+    public String formatTaskCount(int size) {
+        return "Now you have " + size + " tasks in your list.";
     }
 
     /**

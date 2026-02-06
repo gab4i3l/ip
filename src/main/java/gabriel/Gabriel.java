@@ -40,18 +40,45 @@ public class Gabriel {
         taskList = new TaskList(storage.loadFile());
     }
 
+    /**
+     * Display welcome message to users to understand how to use the chatbot.
+     *
+     * @return Welcome message to use the chatbot.
+     */
     public String getWelcomeMessage() {
         return ui.getWelcomeMessage();
     }
 
+    /**
+     * Display help message to users to understand how to use the chatbot.
+     *
+     * @return Help message to use the chatbot.
+     */
     public String getHelpMessage() {
         return ui.getHelpMessage();
     }
 
+    /**
+     * Display example message to users to understand how to use the chatbot.
+     *
+     * @return Example message to use the chatbot.
+     */
     public String getExampleMessage() {
         return ui.getExampleMessage();
     }
 
+    /**
+     * Saves user task to allow autosave after a command
+     */
+    public void save() {
+        storage.saveTasks(taskList.getTasks());
+    }
+
+    /**
+     * Display task loading message to users.
+     *
+     * @return Task loading messsage.
+     */
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
            return ui.getLoadedMessage(); // Recommended by AI to abstract it to ui
@@ -61,6 +88,8 @@ public class Gabriel {
 
     /**
      * Lists all current task in the task list.
+     *
+     * @return Formatted list of tasks.
      */
     public String performListCommand() {
         return ui.listTaskItems(taskList.getTasks());
@@ -69,7 +98,8 @@ public class Gabriel {
     /**
      * Marks a given task based on index given.
      *
-     * @param input The raw user input
+     * @param input The raw user input.
+     * @return Task marked confirmation message.
      */
     public String performMarkCommand(String input) throws GabrielException {
         int markIndex = Parser.parseIndex(input);
@@ -93,6 +123,7 @@ public class Gabriel {
      * Unmarks a given task based on index given.
      *
      * @param input The raw user input.
+     * @return Task unmarked confirmation message.
      */
     public String performUnmarkCommand(String input) throws GabrielException {
         try {
@@ -115,6 +146,7 @@ public class Gabriel {
      * Adds a todo task into the current task list.
      *
      * @param input The raw user input.
+     * @return Task added confirmation message.
      */
     public String performToDoCommand(String input) throws GabrielException {
         String toDoDetails = Parser.parseToDo(input);
@@ -128,6 +160,7 @@ public class Gabriel {
      * Adds a Deadline task into the current task list.
      *
      * @param input The raw user input.
+     * @return Task added confirmation message.
      */
     public String performDeadlineCommand(String input) throws GabrielException {
         String[] deadlineDetails = Parser.parseDeadline(input);
@@ -146,6 +179,7 @@ public class Gabriel {
      * Adds an Event task into the current task list.
      *
      * @param input The raw user input.
+     * @return Task added confirmation message.
      */
     public String performEventCommand(String input) throws GabrielException {
         String[] eventDetails = Parser.parseEvent(input);
@@ -165,6 +199,7 @@ public class Gabriel {
      * Deletes a task from the list based on given index.
      *
      * @param input The raw user input.
+     * @return Task deleted confirmation message.
      */
     public String performDeleteCommand(String input) throws GabrielException {
         try {
@@ -180,6 +215,7 @@ public class Gabriel {
     /**
      * Saves current task list into a file.
      *
+     * @return Task saved confirmation message.
      */
     public String performSaveCommand() {
         storage.saveTasks(taskList.getTasks());
@@ -190,6 +226,7 @@ public class Gabriel {
      * Finds tasks that matches the user's input.
      *
      * @param input The raw user input.
+     * @return List of task with matching keyword.
      */
     public String performFindCommand(String input) {
         try {
@@ -201,14 +238,9 @@ public class Gabriel {
     }
 
     /**
-     * Saves user task to allow autosave after a command
-     */
-    private void save() {
-        storage.saveTasks(taskList.getTasks());
-    }
-
-    /**
      * Generates a response for the user's chat message.
+     *
+     * @return Corresponding message for operation done on the list of tasks.
      */
     public String getResponse(String input) {
         try {
