@@ -7,7 +7,7 @@ public class DeadlinesTest {
     @Test
     public void testStringConversion() {
         Deadlines deadline = new Deadlines("return book", "2/12/2019 1800");
-        String expected = "[D][ ] return book (by:Dec 02 2019, 6:00PM)";
+        String expected = "[D][ ] return book (by: Dec 02 2019, 6:00PM)";
         assertEquals(expected, deadline.toString());
     }
 
