@@ -83,7 +83,7 @@ public class Gabriel {
      */
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
-            return ui.getLoadedMessage();
+            return ui.getLoadedMessage(); // Recommended by ChatGPT to abstract it to UI for better abstraction
         }
         return "";
     }
@@ -117,7 +117,7 @@ public class Gabriel {
             return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
             throw new GabrielException("That task number doesn't exist. "
-                    + "Type list to see tasks.");
+                    + "Type list to see tasks."); //Message recommended by ChatGPT for better clarity
         }
     }
 

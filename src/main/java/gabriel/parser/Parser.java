@@ -10,15 +10,18 @@ import gabriel.exception.GabrielException;
 public class Parser {
     /** Generic Error message. */
     private static final String GENERIC_ERROR_MESSAGE = "The command cannot be processed."
-            + " Please check if your input is in the correct format!"; //Recommended by AI to declare message as string
+            + " Please check if your input is in the correct format!";
+                //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when improper deadline command is given. */
     private static final String DEADLINE_FORMAT_ERROR_MESSAGE = "The deadline command must follow the format:\n"
-            + "deadline <description> /by <time>"; //Recommended by AI to declare message as string
+            + "deadline <description> /by <time>";
+                //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when improper event command is given. */
     private static final String EVENT_FORMAT_ERROR_MESSAGE = "The event command must follow the format:"
-            + " event <description> /from <time> /to <time>"; //Recommended by AI to declare message as string
+            + " event <description> /from <time> /to <time>";
+                //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when an empty description is given. */
     private static final String EMPTY_DESCRIPTION_MESSAGE = "The description given cannot be empty!";
