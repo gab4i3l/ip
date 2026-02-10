@@ -12,7 +12,6 @@ import javafx.stage.Stage;
  * @author JavaFX tutorial
  * Credits to JavaFX tutorial for the FXML code,MainWindow and DialogBox layout.
  * A GUI for Gabriel using FXML.
- *
  */
 public class Main extends Application {
 

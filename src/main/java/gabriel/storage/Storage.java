@@ -86,7 +86,7 @@ public class Storage {
         File file = new File(this.filePath);
         File parentDirectory = file.getParentFile();
         if (!parentDirectory.exists()) {
-             parentDirectory.mkdirs();
+            parentDirectory.mkdirs();
         }
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task: myTask) {
