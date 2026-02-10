@@ -66,7 +66,7 @@ public class Gabriel {
     }
 
     /**
-     * Saves user task to allow autosave after a command
+     * Saves user task to allow autosave after a command.
      */
     public void save() {
         try {
@@ -83,7 +83,7 @@ public class Gabriel {
      */
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
-            return ui.getLoadedMessage(); // Recommended by AI to abstract it to ui
+            return ui.getLoadedMessage();
         }
         return "";
     }
@@ -117,7 +117,7 @@ public class Gabriel {
             return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
             throw new GabrielException("That task number doesn't exist. "
-                    + "Type list to see tasks."); //Message recommended by AI
+                    + "Type list to see tasks.");
         }
     }
 
