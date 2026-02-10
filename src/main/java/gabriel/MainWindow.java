@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 /**
  * @author JavaFX tutorial
  * Credits to JavaFX tutorial for the FXML code,MainWindow and DialogBox layout
- *
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {

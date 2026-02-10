@@ -79,7 +79,7 @@ public class Gabriel {
     /**
      * Display task loading message to users.
      *
-     * @return Task loading messsage.
+     * @return Task loading message.
      */
     public String getLoadingMessage() {
         if (taskList.getSize() > 0) {
