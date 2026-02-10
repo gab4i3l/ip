@@ -18,6 +18,14 @@ import gabriel.ui.Ui;
  * @since 2026-01-22
  */
 public class Gabriel {
+    private static final String DATE_TIME_ERROR_MESSAGE = "PSY PSY PSY!\n(I can't understand that date!"
+            + " Please use the format: dd/mm/yyyy HHmm)";
+
+    private static final String INDEX_OUT_OF_BOUND_MESSAGE = "Duck psy psy.\n(That task number doesn't exist. "
+            + "Type list to see tasks.)";
+        //Message recommended by ChatGPT for better clarity
+
+
     /** The storage class that is responsible for loading and saving tasks. */
     private Storage storage;
 
@@ -116,8 +124,7 @@ public class Gabriel {
             String confirmation = ui.getTaskMarkedMessage(task);
             return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("That task number doesn't exist. "
-                    + "Type list to see tasks."); //Message recommended by ChatGPT for better clarity
+            throw new GabrielException(INDEX_OUT_OF_BOUND_MESSAGE);
         }
     }
 
@@ -140,7 +147,7 @@ public class Gabriel {
 
             return confirmation + "\n" + ui.formatTaskCount(taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
+            throw new GabrielException(INDEX_OUT_OF_BOUND_MESSAGE);
         }
     }
 
@@ -172,8 +179,7 @@ public class Gabriel {
             save();
             return ui.getTaskAddedMessage(newDeadLine, taskList.getSize());
         } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!"
-                    + " Please use the format: dd/mm/yyyy HHmm");
+            throw new GabrielException(DATE_TIME_ERROR_MESSAGE);
         }
     }
 
@@ -192,8 +198,7 @@ public class Gabriel {
             save();
             return ui.getTaskAddedMessage(newEvent, taskList.getSize());
         } catch (DateTimeParseException e) {
-            throw new GabrielException("I can't understand that date!"
-                    + " Please use the format: dd/mm/yyy HHmm");
+            throw new GabrielException(DATE_TIME_ERROR_MESSAGE);
         }
     }
 
@@ -210,7 +215,7 @@ public class Gabriel {
             save();
             return ui.getTaskDeletedMessage(removedTask, taskList.getSize());
         } catch (IndexOutOfBoundsException e) {
-            throw new GabrielException("That task number doesn't exist Type list to see tasks.");
+            throw new GabrielException(INDEX_OUT_OF_BOUND_MESSAGE);
         }
     }
 

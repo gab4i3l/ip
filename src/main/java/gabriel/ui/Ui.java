@@ -16,8 +16,8 @@ public class Ui {
      * @return Welcome message for the user.
      */
     public String getWelcomeMessage() {
-        return "Hello! I am Gabriel, and I am here to manage your tasks! \n\n"
-                + "Enter a command or input 'help' to know more!\n";
+        return "Psy psy duck duck psy psy psy psyduck!\n(Hello! I am Gabriel, and I am here to manage your tasks! \n"
+                + "Enter a command or input 'help' to know more!)\n";
     }
 
     /**
@@ -26,7 +26,7 @@ public class Ui {
      * @return Loading message for the user.
      */
     public String getLoadedMessage() {
-        return "Loaded previous tasks successfully!" + "Use the command 'list' to see them!";
+        return "Psy duck duck psy!\n(Loaded previous tasks successfully!" + "Use the command 'list' to see them!)";
     }
 
     /**
@@ -68,7 +68,7 @@ public class Ui {
      * @return Exit message for the user.
      */
     public String getExitMessage() {
-        return "Bye. Hope to see you again soon!\n";
+        return "Psyyyy duckkk!\n(Bye. Hope to see you again soon!)\n";
     }
 
     /**
@@ -78,7 +78,7 @@ public class Ui {
      * @return Confirmation message that task is marked for the user.
      */
     public String getTaskMarkedMessage(Task task) {
-        return "OK, I've marked this task as done: \n"
+        return "Psy duck psy psy duck duck!\n(OK, I've marked this task as done:) \n"
                 + "[X] " + task.getDescription() + "\n";
     }
 
@@ -89,8 +89,8 @@ public class Ui {
      * @return Confirmation message that task is unmarked for the user.
      */
     public String getTaskUnmarkedMessage(Task task) {
-        return "OK, I've unmarked this task as not done yet: \n"
-                + "[ ] " + task.getDescription();
+        return "Duck psy duck duck psy psy!\n(OK, I've unmarked this task as not done yet:) \n"
+                + "[ ] " + task.getDescription() + "\n";
     }
 
     /**
@@ -99,7 +99,7 @@ public class Ui {
      * @return Confirmation message that task is added for the user.
      */
     public String getTaskAddedMessage(Task task, int size) {
-        return "Got it. I've added this task: \n" + "   "
+        return "Psyduck psyduck!\n(Got it. I've added this task:) \n" + "   "
                 + task + "\n" + formatTaskCount(size);
     }
 
@@ -109,8 +109,8 @@ public class Ui {
      * @return Confirmation message that task is deleted for the user.
      */
     public String getTaskDeletedMessage(Task task, int size) {
-        return "Noted. I've removed this task:\n " + task
-                + formatTaskCount(size);
+        return "Psy duck psy psy.\n(Noted. I've removed this task:\n " + task
+                + formatTaskCount(size) + ")";
     }
 
     /**
@@ -119,7 +119,7 @@ public class Ui {
      * @return Confirmation message that task is saved for the user.
      */
     public String getTaskSavedMessage() {
-        return "Alright we have saved your tasks!";
+        return "Psy duck psy duck!\n(Alright we have saved your tasks!)";
     }
 
     /**
@@ -128,7 +128,7 @@ public class Ui {
      * @return Wrong command message to user.
      */
     public String getWrongCommandMessage() {
-        return "That is not a proper command!";
+        return "DUCK DUCK PSY!\n(That is not a proper command!)";
     }
 
     /**
@@ -147,7 +147,7 @@ public class Ui {
      * @return Task count message for the user.
      */
     public String formatTaskCount(int size) {
-        return "Now you have " + size + " tasks in your list.";
+        return "Psy psy duck duck.\n(Now you have " + size + " tasks in your list.)";
     }
 
     /**
@@ -157,7 +157,7 @@ public class Ui {
      * @return Formatted string of list of task.
      */
     public String listTaskItems(ArrayList<Task> myTask) {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        StringBuilder sb = new StringBuilder("Psyduck duckpsy:\n(Here are the tasks in your list:)\n");
         int count = 1;
         for (Task task : myTask) {
             sb.append(count).append(".").append(task.toString()).append("\n");
