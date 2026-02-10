@@ -9,22 +9,25 @@ import gabriel.exception.GabrielException;
  */
 public class Parser {
     /** Generic Error message. */
-    private static final String GENERIC_ERROR_MESSAGE = "The command cannot be processed."
-            + " Please check if your input is in the correct format!";
+    private static final String GENERIC_ERROR_MESSAGE = "Psy??\n(The command cannot be processed."
+            + " Please check if your input is in the correct format!)";
     //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when improper deadline command is given. */
-    private static final String DEADLINE_FORMAT_ERROR_MESSAGE = "The deadline command must follow the format:\n"
-            + "deadline <description> /by <time>";
+    private static final String DEADLINE_FORMAT_ERROR_MESSAGE = "Psyduck, psyduck psy\n"
+            + "(The deadline command must follow the format:\n"
+            + "deadline <description> /by <time>)";
     //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when improper event command is given. */
-    private static final String EVENT_FORMAT_ERROR_MESSAGE = "The event command must follow the format:"
-            + " event <description> /from <time> /to <time>";
+    private static final String EVENT_FORMAT_ERROR_MESSAGE = "Psyduck psy psy\n"
+            + "(The event command must follow the format:"
+            + " event <description> /from <time> /to <time>)";
     //Recommended by ChatGPT to declare message as string for repeated use
 
     /** Error message when an empty description is given. */
-    private static final String EMPTY_DESCRIPTION_MESSAGE = "The description given cannot be empty!";
+    private static final String EMPTY_DESCRIPTION_MESSAGE = "Psyduck psy!\n"
+            + "(The description given cannot be empty!)";
 
     /**
      * Extracts the command from the user input.
@@ -47,9 +50,9 @@ public class Parser {
             String[] parts = input.split(" ");
             return Integer.parseInt(parts[1]) - 1;
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new GabrielException("The number you entered is invalid!");
+            throw new GabrielException("Psy duck duck!\nThe number you entered is invalid!)");
         } catch (NumberFormatException e) {
-            throw new GabrielException("That is not a number! Give me an actual number!");
+            throw new GabrielException("Psy psy duck!\nThat is not a number! Give me an actual number!)");
         } catch (Exception e) {
             throw new GabrielException(GENERIC_ERROR_MESSAGE);
         }
@@ -109,7 +112,7 @@ public class Parser {
             }
 
             if (by.isEmpty()) {
-                throw new GabrielException("The deadline given is empty!");
+                throw new GabrielException("Duck duck duck!\n(The deadline given is empty!)");
             }
 
             return new String[]{description, by};
@@ -157,7 +160,7 @@ public class Parser {
             String to = timeParts[1].trim();
 
             if (from.isEmpty() || to.isEmpty()) {
-                throw new GabrielException("The /from or /to is empty!");
+                throw new GabrielException("Psy duck psy duck!\n(The /from or /to is empty!)");
             }
 
             return new String[]{eventDescription, from, to};
@@ -181,7 +184,7 @@ public class Parser {
         try {
             String keyword = input.substring(5).trim();
             if (keyword.isEmpty()) {
-                throw new GabrielException("The keyword cannot be empty!");
+                throw new GabrielException("Psyduck psy!\n(The keyword cannot be empty!)");
             }
             return keyword;
         } catch (GabrielException e) {

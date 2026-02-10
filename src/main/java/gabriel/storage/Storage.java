@@ -93,7 +93,7 @@ public class Storage {
                 writer.println(task.writeToFile());
             }
         } catch (IOException e) {
-            throw new GabrielException("Ran into an error saving tasks. ");
+            throw new GabrielException("Psy duck duck psy.\n(Ran into an error saving tasks.)");
         }
     }
 }
