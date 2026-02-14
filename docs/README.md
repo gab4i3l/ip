@@ -1,8 +1,6 @@
 # Gabriel User Guide
 
-
-
-// Product screenshot goes here
+![Gabriel UI](Ui.png)
 
 ## Overview
 Gabriel is a chatbot that helps you manage your tasks efficiently through simple command-line inputs.
