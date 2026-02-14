@@ -68,6 +68,7 @@ public class TaskList {
         for (Task task : tasks) {
             if (task.getDescription().contains(keyword)) {
                 if (!isFound) {
+                    sb.append("Psy psy psy:\n");
                     sb.append("Here are the matching tasks in your list: \n");
                     isFound = true;
                 }

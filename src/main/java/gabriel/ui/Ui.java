@@ -109,7 +109,7 @@ public class Ui {
      * @return Confirmation message that task is deleted for the user.
      */
     public String getTaskDeletedMessage(Task task, int size) {
-        return "Psy duck psy psy.\n(Noted. I've removed this task:\n " + task
+        return "Psy duck psy psy.\n(Noted. I've removed this task:\n " + task + "\n"
                 + formatTaskCount(size) + ")";
     }
 
