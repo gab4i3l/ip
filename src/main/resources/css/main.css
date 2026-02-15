@@ -1,27 +1,27 @@
 .root {
-    main-color: #DFF7FF;       /* Create a looked-up color called "main-color" within root. */
+    main-color: #F3F4F7;       /* Create a looked-up color called "main-color" within root. */
     -fx-background-color: main-color;
     -fx-background-image: url("../images/background.jpg");
     -fx-background-size: stretch;
 }
 
 .text-field {
-    -fx-background-color: #EAFBFF;
+    -fx-background-color: #FFFFFF;
     -fx-font: 20px "Arial";
 }
 
 .button {
-    -fx-background-color: #37D6C7;
+    -fx-background-color: #FFCB05;
     -fx-font: italic bold 16px "Arial";
 }
 
 .button:hover {
-    -fx-background-color:#6DEDE1;
+    -fx-background-color:#E6B800;
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:#1FB8AC;
+    -fx-background-color:#1F9FDD;
     -fx-font-size: 20px;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
+    -fx-background-color: rgba(0,0,0,0.25);
     -fx-background-radius: 1em;
 }
 

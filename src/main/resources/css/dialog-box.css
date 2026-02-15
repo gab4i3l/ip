@@ -1,24 +1,24 @@
 .label {
-    -bubble-bg:#EAFBFF;
+    -bubble-bg:#FFFFFF;
     -fx-background-color: -bubble-bg;
-    -fx-border-color: #6EDFD2;
+    -fx-border-color: #DADDE1;
     -fx-border-width: 1.5px;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
-    -fx-text-fill: ladder(-bubble-bg, white 49%, black 50%);
+    -fx-text-fill: black;
 }
 
 .reply-label {
-    -bubble-bg: #E8FFF2;
+    -bubble-bg: #E8F4FF;
 
-    -fx-border-color:#9FE3C6;
+    -fx-border-color: transparent;
     -fx-border-width: 1.5px;
 
     -fx-background-color: -bubble-bg;
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
 
-    -fx-text-fill: ladder(-bubble-bg, white 49%, black 50%);
+    -fx-text-fill: black;
 }
 
 #displayPicture {
